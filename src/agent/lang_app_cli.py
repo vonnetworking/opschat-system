@@ -25,4 +25,4 @@ if __name__ == "__main__":
 
     agent = Agent()
     
-    print(agent.generate_response(args.query))
+    print(f"\n\nRESPONSE:\n{agent.generate_response(args.query)}")

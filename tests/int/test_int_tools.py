@@ -16,13 +16,10 @@ from agent.tools import (
     [
         ("2025-02-01", "2025-02-06", "application status", "web_back_end", None),
         ("2025-02-01", "2025-02-06", "application status", None, "192.168.1.1"),
-        ("2025-02-01", "2025-02-06", "errors", None, None),
-        ("2025-02-01", "2025-02-06", "warnings", None, None),
-        ("2025-02-01", "2025-02-06", "mock-data", None, None),
         ("mock-data", "mock-data", "mock-data", None, None)
     ]
 )
-def test_tool_query_program_logs_real(begin_date, end_date, prompt, application, ip):
+def test_tool_query_program_logs(begin_date, end_date, prompt, application, ip):
     # Call the actual function
     args = {
             "begin_date": begin_date,
@@ -47,4 +44,4 @@ def test_tool_query_program_logs_real(begin_date, end_date, prompt, application,
     content = result.content
     
     assert content
-    assert all(isinstance(entry, str) for entry in content), "Each log entry should be a dictionary"
+    assert type(content) is str

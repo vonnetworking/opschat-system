@@ -6,7 +6,7 @@ logger.setLevel(INFO)
 
 
 @tool
-def tool_local_ip():
+def tool_local_ip() -> str:
     """
     Retrieves the local system host name and IP address
     """
@@ -19,7 +19,7 @@ def tool_local_ip():
 
 
 @tool
-def tool_system_time():
+def tool_system_time() -> str:
     """
     Retrieves the local system time
     """
@@ -30,7 +30,7 @@ def tool_system_time():
 
 
 @tool
-def tool_query_program_logs(begin_date: str, end_date: str, prompt: str, application: str=None, ip: str=None, change_id: str=None):
+def tool_query_program_logs(begin_date: str, end_date: str, prompt: str, application: str=None, ip: str=None, change_id: str=None) -> str:
     """
     This tool will query program log entries based on the provided application details and date periods.
     The following must always be provided to limit the scope of the logs:
@@ -68,6 +68,6 @@ def tool_query_program_logs(begin_date: str, end_date: str, prompt: str, applica
         logger.error(f"ERROR: tool_query_program_logs > error running qdrant query .... {str(e)}")
         return f"ERROR: tool_query_program_logs > error running qdrant query .... {str(e)}"
 
-    return results
+    return str(results)
 
         

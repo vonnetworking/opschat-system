@@ -18,6 +18,7 @@ def test_tool_local_ip():
         result = tool_local_ip.invoke(None)
         
         # Assert the expected output
+        assert type(result) is str
         expected_output = "Host info: mock-hostname, 192.168.0.1"
         assert result == expected_output
     
@@ -26,5 +27,6 @@ def test_tool_system_time():
     result = tool_system_time.invoke(None)
     
     # Expected string
+    assert type(result) is str
     expected_output = "System time: "
     assert result.startswith(expected_output)

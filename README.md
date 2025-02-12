@@ -2,11 +2,11 @@
 
 # Setup
 ```bash
-pip install requirements.txt
+pip install -r src/agent/requirements.txt
 ```
 
 # Usage
 ## CLI
 ```bash
 python src/agent/lang_app_cli.py "Did any applications go down today?"
-```
+``

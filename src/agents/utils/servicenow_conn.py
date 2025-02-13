@@ -3,25 +3,11 @@ from pysnc import ServiceNowClient, TableAPI
 from pysnc.record import GlideRecord
 from contextlib import contextmanager
 import json
+import os
 
-MOCK_DATA = {
-    'result': [
-        {
-            'description': 'ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID123) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD; System Name=ABC1; Jobname=JOBTRAC; System Date=12/12/12; System Time=12:12:12;',
-            'short_description': 'ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD',
-            'state': '7', # can we get a state-value map?
-            'u_current_business_impact': '',
-            'u_current_status': ''
-        },
-        {
-            'description': 'ASDE 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID124) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD; System Name=ABC1; Jobname=JOBTRAC; System Date=12/12/12; System Time=12:12:12;',
-            'short_description': 'ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD',
-            'state': '7', # can we get a state-value map?
-            'u_current_business_impact': '',
-            'u_current_status': ''
-        }
-    ]
-}
+SERVICENOW_INSTANCE = os.getenv('SERVICENOW_INSTANCE') or 'test-instance'
+SERVICENOW_USER = os.getenv('SERVICENOW_USER') or 'test-user'
+SERVICENOW_PASS = os.getenv('SERVICENOW_PASS') or 'test-pass' 
 
 class ServiceNowResponse:
     status_code: int
@@ -68,28 +54,42 @@ class MockServiceNowClient:
         self.mock_table_api = MagicMock(spec=TableAPI)
         self.mock_table_api._send.return_value = mock_response
         self.mock_table_api.list.return_value = mock_response
-        
-        # # Patch the TableAPI constructor
-        # with patch('pysnc.client.TableAPI') as MockTableAPI:
-        #     MockTableAPI.return_value = mock_table_api
-        #     client = ServiceNowClient('mock-instance', ('admin', 'password'))
-        #     yield client
 
         # Create the patcher
         self.patcher = patch('pysnc.client.TableAPI', return_value=self.mock_table_api)
         self.patcher.start()
 
         # Create the client
-        self.client = ServiceNowClient('mock-instance', ('admin', 'password'))
+        self.client = ServiceNowClient(SERVICENOW_INSTANCE, (SERVICENOW_USER, SERVICENOW_PASS))
 
     def __del__(self):
         # Clean up the patch when the mock client is destroyed
         self.patcher.stop()
 
 
-def get_servicenow_client(is_mock=False):
+def get_mock_data(data_source: str):
+    file_path = os.path.join(os.path.dirname(__file__), "data-templates", f"{data_source}.json")
+    
+    with open(file_path, "r") as file:
+        lines = ''.join(file.readlines())
+    
+    try:
+        jsonl_data = json.loads(lines)
+    except Exception as e:
+        raise RuntimeError(f"Error loading ServiceNow data template: {file_path}\nError: {str(e)}")
+
+    return {'result': jsonl_data}
+
+
+def get_servicenow_client(is_mock=False, mock_data_source:str=None):
+    """
+    Generates a ServiceNow client.
+    mock_data_source is required if is_mock is True
+    """
     if is_mock:
-        return MockServiceNowClient(MOCK_DATA).client
+        if not mock_data_source:
+            raise ValueError("mock_data_source is required if is_mock=True")
+        return MockServiceNowClient(get_mock_data(mock_data_source)).client
     else:
-        return ServiceNowClient('test-instance', ('user','pass'))
+        return ServiceNowClient(SERVICENOW_INSTANCE, (SERVICENOW_USER, SERVICENOW_PASS))
 

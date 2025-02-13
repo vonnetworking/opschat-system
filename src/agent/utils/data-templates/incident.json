@@ -1,0 +1,16 @@
+[
+    {
+        "description": "ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID123) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD; System Name=ABC1; Jobname=JOBTRAC; System Date=12/12/12; System Time=12:12:12;",
+        "short_description": "ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD",
+        "state": "7",
+        "u_current_business_impact": "",
+        "u_current_status": ""
+    },
+    {
+        "description": "ASDE 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID124) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD; System Name=ABC1; Jobname=JOBTRAC; System Date=12/12/12; System Time=12:12:12;",
+        "short_description": "ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD",
+        "state": "7",
+        "u_current_business_impact": "",
+        "u_current_status": ""
+    }
+]

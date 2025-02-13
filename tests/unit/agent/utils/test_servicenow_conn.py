@@ -6,17 +6,19 @@ from pysnc.record import GlideRecord
 
 
 @pytest.mark.parametrize(
-    "is_mock",
-    [True, False]
+    "is_mock, mock_data_source",
+    [(True, "incident"), 
+     (False, None)
+    ]
 )
-def test_get_servicenow_client_mock(is_mock):
-    client = get_servicenow_client(is_mock=is_mock)
+def test_get_servicenow_client_mock(is_mock, mock_data_source):
+    client = get_servicenow_client(is_mock, mock_data_source)
 
     assert client
     assert type(client) is ServiceNowClient
 
 def test_mock_client_query():
-    client = get_servicenow_client(is_mock=True)
+    client = get_servicenow_client(is_mock=True, mock_data_source='incident')
 
     gr = client.GlideRecord('incident')
     gr.add_query("active", "true")

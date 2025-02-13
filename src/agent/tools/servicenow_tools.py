@@ -10,7 +10,7 @@ from agent.utils.servicenow_conn import get_servicenow_client, GlideRecord
 @tool
 def tool_search_incidents() -> str:
     """Search for recent ServiceNow incidents and return their details."""
-    client = get_servicenow_client(is_mock=True)
+    client = get_servicenow_client(is_mock=True, mock_data_source='incident')
 
     gr = client.GlideRecord('incident')
     gr.limit = 100

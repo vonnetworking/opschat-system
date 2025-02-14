@@ -12,7 +12,6 @@ from pydantic import BaseModel
 from server.schemas import ChatMessage, ChatRequest, ChatCompletionDelta, ChatCompletionChoice, ChatCompletionChunk
 
 from agents.main_agent import MainAgent
-from agents.calculator_agent import CalculatorAgent
 
 # ------------------------------------------------------------------
 # Logging Setup
@@ -21,7 +20,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 main_agent = MainAgent()
-calc_agent = CalculatorAgent()
 
 # ------------------------------------------------------------------
 # FastAPI Setup
@@ -136,7 +134,7 @@ def openai_stream_generator(response_gen: Generator[str, None, None]):
 
 # Modify helper to summarize conversation by delegating to the agent.
 def generate_conversation_title(chat_req: ChatRequest) -> str:
-    return agent.generate_conversation_summary(chat_req)
+    return main_agent.generate_conversation_summary(chat_req)
 
 @app.post("/v1/chat/completions")
 async def chat(chat_req: ChatRequest):
@@ -144,7 +142,7 @@ async def chat(chat_req: ChatRequest):
     assert chat_req.stream
 
     if chat_req.max_tokens == 15:
-        summary = agent.generate_conversation_summary(chat_req)
+        summary = main_agent.generate_conversation_summary(chat_req)
         gen: Generator = (lambda x: (yield x))(summary)
         return StreamingResponse(
             content=openai_stream_generator(gen),
@@ -153,20 +151,12 @@ async def chat(chat_req: ChatRequest):
         )
 
     query: str = extract_message(chat_req)
-    # Check if query is for calculation (e.g., prefix "calc:")
-    if query.strip().lower().startswith("calc:"):
-        calc_query = query[len("calc:"):].strip()
-        response_stream = calc_agent.stream(
-            {"messages": [("user", calc_query)]},
-            stream_mode=["updates"],
-            config={"configurable": {"thread_id": "dummy"}}
-        )
-    else:
-        response_stream = main_agent.stream(
-            {"messages": [("user", query)]},
-            stream_mode=["updates"],
-            config={"configurable": {"thread_id": "dummy"}}
-        )
+ 
+    response_stream = main_agent.stream(
+        {"messages": [("user", query)]},
+        stream_mode=["updates"],
+        config={"configurable": {"thread_id": "dummy"}}
+    )
     return StreamingResponse(
         content=openai_stream_generator(response_stream),
         media_type="text/event-stream",

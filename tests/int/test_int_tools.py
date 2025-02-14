@@ -6,7 +6,7 @@ from langchain_core.messages.tool import ToolCall, ToolMessage
 
 from langgraph.prebuilt import ToolNode
 
-from agent.tools import (
+from agents.tools import (
     tool_query_program_logs
 )
 

@@ -1,5 +1,5 @@
 import pytest
-from agent.main_agent import Agent
+from agents.main_agent import Agent
 
 @pytest.mark.parametrize(
     "message",

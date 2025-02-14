@@ -11,7 +11,7 @@ from langgraph.prebuilt import create_react_agent
 from langgraph.checkpoint.memory import MemorySaver
 import boto3
 
-from agent.tools import (
+from agents.tools import (
     tool_local_ip,
     tool_system_time,
     tool_query_program_logs
@@ -36,7 +36,7 @@ def get_llm():
     return bedrock_llm
 
 
-class Agent:
+class MainAgent:
     tools: List[BaseTool]
     model: BaseChatModel
 
@@ -72,4 +72,27 @@ class Agent:
         response = final_state["messages"][-1].content
 
         return response
-    
+
+    def generate_conversation_summary(self, chat_req) -> str:
+        # Using generate_response as a simple summary generator
+        return self.generate_response("Summarize conversation: " + str(chat_req))
+
+    # New stream method that delegates to self.app.stream
+    def stream(self, request: dict, stream_mode=None, config=None):
+        if stream_mode is None:
+            stream_mode = ["updates"]
+        if config is None:
+            config = {"configurable": {"thread_id": "dummy", "checkpoint_ns": "dummy", "checkpoint_id": "dummy"}}
+        return self.app.stream(request, stream_mode=stream_mode, config=config)
+
+    # Optional: async generate_stream method if needed by your implementation.
+    async def generate_stream(self, message: str):
+        import anyio
+        def sync_stream():
+            return list(self.app.stream(
+                {"messages": [{"role": "user", "content": message}]},
+                config={"configurable": {"thread_id": "dummy", "checkpoint_ns": "dummy", "checkpoint_id": "dummy"}}
+            ))
+        chunks = await anyio.to_thread.run_sync(sync_stream)
+        for chunk in chunks:
+            yield chunk

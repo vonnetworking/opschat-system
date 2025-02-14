@@ -44,7 +44,7 @@ def tool_query_program_logs(begin_date: str, end_date: str, prompt: str, applica
     """
     logger.info(">> TOOL USE: tool_query_program_logs")
     
-    from agent.utils.qdrant import QdrantUtil
+    from agents.utils.qdrant import QdrantUtil
 
     vector_store_util = QdrantUtil()
     intent = {}

@@ -2,7 +2,7 @@
 import pytest
 from unittest.mock import patch
 
-from agent.tools.servicenow_tools import tool_search_incidents
+from agents.tools.servicenow_tools import tool_search_incidents
 
 def test_tool_search_incidents():
     response = tool_search_incidents.invoke(None)

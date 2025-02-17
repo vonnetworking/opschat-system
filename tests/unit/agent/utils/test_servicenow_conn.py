@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch
 
-from agent.utils.servicenow_conn import ServiceNowClient, MockServiceNowClient, get_servicenow_client
+from agents.utils.servicenow_conn import ServiceNowClient, MockServiceNowClient, get_servicenow_client
 from pysnc.record import GlideRecord
 
 

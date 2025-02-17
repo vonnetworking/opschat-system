@@ -11,12 +11,12 @@ from langgraph.prebuilt import create_react_agent
 from langgraph.checkpoint.memory import MemorySaver
 import boto3
 
-from agent.tools.common import (
+from agents.tools.common import (
     tool_local_ip,
     tool_system_time,
     tool_query_program_logs
 )
-from agent.tools.servicenow_tools import tool_search_incidents
+from agents.tools.servicenow_tools import tool_search_incidents
 
 MODEL_NAME_DEFAULT = 'anthropic.claude-3-5-sonnet-20240620-v1:0'
 PROMPT_FILE_DEFAULT = 'MAIN.txt'

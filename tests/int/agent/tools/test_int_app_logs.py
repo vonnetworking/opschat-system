@@ -1,7 +1,7 @@
 import pytest
 from langchain_core.messages.tool import ToolCall, ToolMessage
 
-from agent.tools.common import (
+from agents.tools.common import (
     tool_query_program_logs
 )
 

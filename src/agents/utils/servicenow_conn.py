@@ -68,7 +68,7 @@ class MockServiceNowClient:
 
 
 def get_mock_data(data_source: str):
-    file_path = os.path.join(os.path.dirname(__file__), "data-templates", f"{data_source}.json")
+    file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data-templates", f"{data_source}.json"))
     
     with open(file_path, "r") as file:
         lines = ''.join(file.readlines())

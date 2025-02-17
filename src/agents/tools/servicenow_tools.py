@@ -5,7 +5,7 @@ from logging import getLogger, INFO
 logger = getLogger(__name__)
 logger.setLevel(INFO)
 
-from agent.utils.servicenow_conn import get_servicenow_client, GlideRecord
+from agents.utils.servicenow_conn import get_servicenow_client, GlideRecord
 
 @tool
 def tool_search_incidents() -> str:

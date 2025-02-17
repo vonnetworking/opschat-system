@@ -1,5 +1,5 @@
 import pytest
-from agents.main_agent import Agent
+from agents.main_agent import MainAgent
 
 @pytest.mark.parametrize(
     "message",
@@ -11,7 +11,7 @@ from agents.main_agent import Agent
     ]
 )
 def test_agent_generate_response(message):
-    agent = Agent()  # Initialize the agent
+    agent = MainAgent()  # Initialize the agent
 
     response = agent.generate_response(message)  # Invoke the agent with user input
 

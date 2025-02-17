@@ -6,9 +6,11 @@ A basic operations chat application integrating a Flask-based back-end with a we
 ## Requirements
 
 - Python 3.13
+- Node 22
 
 # Setup
 ```bash
+./install-node.sh
 pip install -r src/agent/requirements.txt
 ```
 
@@ -20,7 +22,6 @@ pip install -r src/agent/requirements.txt
 conda create --name opschat-py3.13 python=3.13
 conda activate opschat-py3.13
 ```
-
 
 
 ## Running the Application

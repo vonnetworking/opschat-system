@@ -16,7 +16,10 @@ from agents.tools.common import (
     tool_system_time,
     tool_query_program_logs
 )
-from agents.tools.servicenow_tools import tool_search_incidents
+from agents.tools.servicenow_tools import ( 
+    tool_search_incidents,
+    tool_search_change_requests
+)
 
 MODEL_NAME_DEFAULT = 'anthropic.claude-3-5-sonnet-20240620-v1:0'
 PROMPT_FILE_DEFAULT = 'MAIN.txt'
@@ -46,7 +49,8 @@ class MainAgent:
             tool_local_ip, 
             tool_system_time, 
             tool_query_program_logs,
-            tool_search_incidents
+            tool_search_incidents,
+            tool_search_change_requests
         ]
         self.model = get_llm()
 

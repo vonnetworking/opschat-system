@@ -1,6 +1,6 @@
 [
     {
-        "description": "Automated PRODSYSTEM deployment of AP1234 ABC-DE-GUI - AB0123",
+        "description": "Automated PRODSYSTEM deployment of AP1234 web_back_end - AB0123",
         "short_description": "Automated PRODSYSTEM deployment of AP1234 ABC-DE-GUI - AB0123",
         "start_date": "2025-02-01 00:00:00",
         "end_date": "2025-02-01 10:00:00",
@@ -12,7 +12,7 @@
     },
     {
         "description": "updated vpc related network templates by deploying network CFTs",
-        "short_description": "I00123 - Amazon Web Services configuration changes for platform security and maintenance",
+        "short_description": "I00123 - Amazon Web Services configuration changes for platform security and maintenance of web_back_end",
         "start_date": "2025-02-02 00:00:00",
         "end_date": "2025-02-02 10:00:00",
         "work_start":"2025-02-02 00:15:00",

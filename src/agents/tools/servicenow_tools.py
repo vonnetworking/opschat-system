@@ -95,3 +95,10 @@ def tool_search_change_requests(begin_date: str, end_date: str, affected_ci: str
     response = f"Found {len(incidents)} change requests\n{'\n'.join([str(r) for r in incidents])}"
 
     return response
+
+@tool
+def tool_search_cmdb(app_name: str=None, class_name: str=None, ci: str=None):
+    """
+    Search ServiceNow CMDB database for application and service information.
+    """
+    pass

@@ -3,7 +3,7 @@ import logging
 from typing import Dict, Any, Iterator, Generator, List, Union, Optional
 from time import time
 from uuid import uuid4
-from fastapi import FastAPI, HTTPException, APIRouter, Request
+from fastapi import FastAPI, HTTPException, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
 import uvicorn
@@ -19,14 +19,7 @@ from agents.main_agent import MainAgent
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Replace main_agent with a dictionary of agents
-user_agents: dict[str, MainAgent] = {}
-
-# Function to generate a unique user ID
-def generate_user_id(request: Request) -> str:
-    user_ip = request.client.host
-    user_agent = request.headers.get("user-agent", "unknown")
-    return f"{user_ip}-{user_agent}"
+main_agent = MainAgent()
 
 # ------------------------------------------------------------------
 # FastAPI Setup
@@ -144,27 +137,12 @@ def generate_conversation_title(chat_req: ChatRequest) -> str:
     return main_agent.generate_conversation_summary(chat_req)
 
 @app.post("/v1/chat/completions")
-async def chat(chat_req: ChatRequest, request: Request):
+async def chat(chat_req: ChatRequest):
     logger.info('Received chat request: %s', chat_req.model_dump())
     assert chat_req.stream
 
-    # Extract user ID from headers or generate one
-    user_id = request.headers.get("x-user-id")
-    if not user_id:
-        user_id = str(uuid4())
-        logger.warning(f"No User ID found in request headers. Generated random user ID: {user_id}")
-    else:
-        logger.info(f"User ID from header: {user_id}")
-
-    # Retrieve or create agent for the user
-    if user_id not in user_agents:
-        user_agents[user_id] = MainAgent()
-        logger.info(f"Created new agent for user ID: {user_id}")
-
-    agent = user_agents[user_id]
-
     if chat_req.max_tokens == 15:
-        summary = agent.generate_conversation_summary(chat_req)
+        summary = main_agent.generate_conversation_summary(chat_req)
         gen: Generator = (lambda x: (yield x))(summary)
         return StreamingResponse(
             content=openai_stream_generator(gen),
@@ -174,7 +152,7 @@ async def chat(chat_req: ChatRequest, request: Request):
 
     query: str = extract_message(chat_req)
  
-    response_stream = agent.stream(
+    response_stream = main_agent.stream(
         {"messages": [("user", query)]},
         stream_mode=["updates"],
         config={"configurable": {"thread_id": "dummy"}}

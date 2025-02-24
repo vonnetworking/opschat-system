@@ -141,6 +141,14 @@ def tool_search_cmdb_ci(app_name: str=None, class_name: str=None, ci_id: str=Non
 
     cirels = [{field: getattr(record, field, '') for field in fields} for record in gr]
 
+    # Mock data filter
+    if app_name:
+        cirels = [r for r in cirels if app_name in r['parent.name'] or app_name in r['child.name']]
+    if class_name:
+        cirels = [r for r in cirels if class_name in r['parent.sys_class_name'] or class_name in r['child.sys_class_name']]
+    if ci_id:
+        cirels = [r for r in cirels if ci_id in r['parent.u_ci_id'] or ci_id in r['child.u_ci_id']]
+
     logger.info(f"Found {len(cirels)} CIs")
 
     response = f"Found {len(cirels)} CIs"+('\n'.join([str(r) for r in cirels]))

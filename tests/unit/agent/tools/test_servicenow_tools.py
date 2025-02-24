@@ -58,11 +58,14 @@ def test_tool_search_change_request():
     ]
 )
 def test_tool_search_cmdb_ci(app_name, class_name, ci_id):
-    args = {
-        "app_name": app_name,
-        "class_name": class_name,
-        "ci_id": ci_id
-    }
+    args = {}
+    if app_name:
+        args["app_name"] = app_name
+    if class_name:
+        args["class_name"] = class_name
+    if ci_id:
+        args["ci_id"] = ci_id
+        
     tool_call = ToolCall(
         name="tool_search_cmdb_ci",
         args = args,

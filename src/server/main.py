@@ -3,7 +3,7 @@ import logging
 from typing import Dict, Any, Iterator, Generator, List, Union, Optional
 from time import time
 from uuid import uuid4
-from fastapi import FastAPI, HTTPException, APIRouter, Request
+from fastapi import FastAPI, HTTPException, APIRouter, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
 import uvicorn
@@ -12,6 +12,7 @@ from pydantic import BaseModel
 from server.schemas import ChatMessage, ChatRequest, ChatCompletionDelta, ChatCompletionChoice, ChatCompletionChunk
 
 from agents.main_agent import MainAgent
+import hashlib
 
 # ------------------------------------------------------------------
 # Logging Setup
@@ -22,11 +23,21 @@ logger = logging.getLogger(__name__)
 # Replace main_agent with a dictionary of agents
 user_agents: dict[str, MainAgent] = {}
 
+COOKIE_NAME = "opschat_user_id"
+
 # Function to generate a unique user ID
 def generate_user_id(request: Request) -> str:
+    # Get user's IP address
     user_ip = request.client.host
-    user_agent = request.headers.get("user-agent", "unknown")
-    return f"{user_ip}-{user_agent}"
+    # Get hostname from request headers
+    host_name = request.headers.get("host", "unknown")
+
+    # Create a signature string
+    signature = f"{user_ip}-{host_name}"
+
+    # Hash the signature to create a unique user ID
+    user_id_hash = hashlib.sha256(signature.encode()).hexdigest()
+    return user_id_hash
 
 # ------------------------------------------------------------------
 # FastAPI Setup
@@ -148,13 +159,17 @@ async def chat(chat_req: ChatRequest, request: Request):
     logger.info('Received chat request: %s', chat_req.model_dump())
     assert chat_req.stream
 
-    # Extract user ID from headers or generate one
-    user_id = request.headers.get("x-user-id")
+    # Extract user ID from cookies or generate one
+    user_id = request.cookies.get(COOKIE_NAME)
     if not user_id:
-        user_id = str(uuid4())
-        logger.warning(f"No User ID found in request headers. Generated random user ID: {user_id}")
+        user_id = generate_user_id(request)
+        logger.warning(f"No User ID found in cookies. Generated random user ID: {user_id}")
+        response = Response(status_code=200) # need a response object to set cookie
+        response.headers["Content-Type"] = "text/event-stream" # set content type before streaming
+        response.set_cookie(COOKIE_NAME, user_id, max_age=3600 * 24 * 30)  # 30 days
     else:
-        logger.info(f"User ID from header: {user_id}")
+        logger.info(f"User ID from cookie: {user_id}")
+        response = Response(status_code=200) # need a response object to stream
 
     # Retrieve or create agent for the user
     if user_id not in user_agents:

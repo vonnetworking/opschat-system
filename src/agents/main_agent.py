@@ -80,8 +80,15 @@ class MainAgent:
         return response
 
     def generate_conversation_summary(self, chat_req) -> str:
-        # Using generate_response as a simple summary generator
-        return self.generate_response("Summarize conversation: " + str(chat_req))
+        # Directly invoke the LLM with a specific summary prompt
+        prompt = PromptTemplate.from_template(
+            "Summarize this conversation in less than 15 tokens, starting with an emoji: {chat_req}"
+        )
+        message = prompt.format(chat_req=str(chat_req))
+
+        # Invoke the LLM directly
+        response = self.model.invoke(message)
+        return response.content
 
     # New stream method that delegates to self.app.stream
     def stream(self, request: dict, stream_mode=None, config=None):

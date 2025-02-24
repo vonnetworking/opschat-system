@@ -15,8 +15,8 @@ import uvicorn
 
 from agents.main_agent import MainAgent
 
-
-MAX_HISTORY_TOKENS = os.getenv("MAX_HISTORY_TOKENS", 4096)
+dotenv.load_dotenv()
+MAX_HISTORY_TOKENS = int(os.getenv("MAX_HISTORY_TOKENS", 4096))
 
 
 # ------------------------------------------------------------------

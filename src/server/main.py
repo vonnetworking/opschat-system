@@ -1,22 +1,23 @@
-import json
 import logging
-from typing import Dict, Any, Iterator, Generator, List, Union, Optional
+import os
 from time import time
 from uuid import uuid4
 from fastapi import FastAPI, HTTPException, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse, JSONResponse
-import uvicorn
-from pydantic import BaseModel
-# New import for schemas
-from server.schemas import ChatMessage, ChatRequest, ChatCompletionDelta, ChatCompletionChoice, ChatCompletionChunk
-
-from agents.main_agent import MainAgent
+from fastapi.responses import StreamingResponse
 from tiktoken import get_encoding
 
-MODEL_NAME = 'anthropic.claude-3-5-sonnet-20240620-v1:0' # Replace with your model name
-ENCODING = get_encoding("cl100k_base")
-MAX_HISTORY_TOKENS = 300
+import dotenv
+from server.schemas import ChatMessage, ChatRequest, ChatCompletionDelta, ChatCompletionChoice, ChatCompletionChunk
+from typing import List, Generator
+
+import uvicorn
+
+from agents.main_agent import MainAgent
+
+
+MAX_HISTORY_TOKENS = os.getenv("MAX_HISTORY_TOKENS", 4096)
+
 
 # ------------------------------------------------------------------
 # Logging Setup
@@ -40,26 +41,41 @@ app.add_middleware(
 router = APIRouter()
 
 
-# Modify extract_message to use ChatRequest
-def extract_message(chat_req: ChatRequest) -> str:
+def summarize_history(history: str) -> str:
+    """Summarizes the conversation history using the LLM."""
+    if history:
+        return main_agent.generate_conversation_summary({"messages": [{"role": "user", "content": history}]})
+    return ""
+
+
+def truncate_history(messages: list) -> str:
+    """Truncates the conversation history to fit within the token budget."""
     history = ""
     history_tokens = 0
-    
-    # Iterate through messages, excluding the last one
-    for message in chat_req.messages[:-1]:
+    ENCODING = get_encoding("cl100k_base")
+ 
+    for message in messages:
         content = f"{message.role}: {message.content}\n"
+
         num_tokens = len(ENCODING.encode(content))
-        
-        # Check if adding this message exceeds the token budget
+
         if history_tokens + num_tokens > MAX_HISTORY_TOKENS:
             logger.info("History exceeds token limit, summarizing...")
-            # Summarize existing history using the LLM
-            if history:
-                history = main_agent.generate_conversation_summary({"messages": [{"role": "user", "content": history}]})
-            break  # Stop adding to history
-        
+            return history, True  # Indicate that summarization is needed
+
         history += content
         history_tokens += num_tokens
+
+    return history, False  # Indicate that summarization is not needed
+
+
+# Modify extract_message to use ChatRequest
+def extract_message(chat_req: ChatRequest) -> str:
+    messages = chat_req.messages[:-1]  # Exclude the last message
+    history, needs_summary = truncate_history(messages)
+
+    if needs_summary:
+        history = summarize_history(history)
 
     last_message = chat_req.messages[-1]
     logger.info("last_message: %s", last_message)

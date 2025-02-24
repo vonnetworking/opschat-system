@@ -12,6 +12,11 @@ from pydantic import BaseModel
 from server.schemas import ChatMessage, ChatRequest, ChatCompletionDelta, ChatCompletionChoice, ChatCompletionChunk
 
 from agents.main_agent import MainAgent
+from tiktoken import get_encoding
+
+MODEL_NAME = 'anthropic.claude-3-5-sonnet-20240620-v1:0' # Replace with your model name
+ENCODING = get_encoding("cl100k_base")
+MAX_HISTORY_TOKENS = 300
 
 # ------------------------------------------------------------------
 # Logging Setup
@@ -37,6 +42,25 @@ router = APIRouter()
 
 # Modify extract_message to use ChatRequest
 def extract_message(chat_req: ChatRequest) -> str:
+    history = ""
+    history_tokens = 0
+    
+    # Iterate through messages, excluding the last one
+    for message in chat_req.messages[:-1]:
+        content = f"{message.role}: {message.content}\n"
+        num_tokens = len(ENCODING.encode(content))
+        
+        # Check if adding this message exceeds the token budget
+        if history_tokens + num_tokens > MAX_HISTORY_TOKENS:
+            logger.info("History exceeds token limit, summarizing...")
+            # Summarize existing history using the LLM
+            if history:
+                history = main_agent.generate_conversation_summary({"messages": [{"role": "user", "content": history}]})
+            break  # Stop adding to history
+        
+        history += content
+        history_tokens += num_tokens
+
     last_message = chat_req.messages[-1]
     logger.info("last_message: %s", last_message)
     if (last_message.role != "user"):
@@ -48,7 +72,10 @@ def extract_message(chat_req: ChatRequest) -> str:
     if not query or isinstance(query, list):
         raise HTTPException(status_code=400, detail="The last message does not have text content.")
     assert isinstance(query, str)
-    return query
+    
+    # Include history in the query
+    final_query = f"{history}\nuser: {query}"
+    return final_query
 
 
 def openai_stream_generator(response_gen: Generator[str, None, None]):

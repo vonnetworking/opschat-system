@@ -18,7 +18,8 @@ from agents.tools.common import (
 )
 from agents.tools.servicenow_tools import ( 
     tool_search_incidents,
-    tool_search_change_requests
+    tool_search_change_requests,
+    tool_search_cmdb_ci
 )
 
 MODEL_NAME_DEFAULT = 'anthropic.claude-3-5-sonnet-20240620-v1:0'
@@ -50,7 +51,8 @@ class MainAgent:
             tool_system_time, 
             tool_query_program_logs,
             tool_search_incidents,
-            tool_search_change_requests
+            tool_search_change_requests,
+            tool_search_cmdb_ci
         ]
         self.model = get_llm()
 

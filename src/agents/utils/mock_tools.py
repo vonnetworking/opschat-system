@@ -12,4 +12,4 @@ def get_mock_data(data_source: str):
     except Exception as e:
         raise RuntimeError(f"Error loading ServiceNow data template: {file_path}\nError: {str(e)}")
 
-    return {'result': jsonl_data}
+    return jsonl_data

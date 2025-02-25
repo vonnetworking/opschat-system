@@ -2,7 +2,8 @@ import pytest
 from langchain_core.messages.tool import ToolCall, ToolMessage
 
 from agents.tools.elasticsearch_tools import (
-    tool_query_program_logs
+    tool_query_program_logs,
+    tool_query_program_metrics
 )
 
 
@@ -39,3 +40,28 @@ def test_tool_query_program_logs(begin_date, end_date, application, ip, change_i
     
     assert content
     assert type(content) is str
+
+
+def test_tool_query_program_metrics():
+    begin_date = "2025-02-01"
+    end_date = "2025-02-28"
+    application_ci_id = "app-ci-id-123"
+    tool_call = ToolCall(
+        name="tool_query_program_metrics",
+        args={
+            "begin_date": begin_date,
+            "end_date": end_date,
+            "application_ci_id": application_ci_id
+        },
+        id="tool-call-id",
+        type="tool_call"
+    )
+    result: ToolMessage = tool_query_program_metrics.invoke(tool_call)
+
+    assert isinstance(result, ToolMessage), f"Expected a ToolMessage, got {type(result)}"
+
+    content = result.content
+    
+    assert content
+    assert type(content) is str
+    assert "Found" in content

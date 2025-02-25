@@ -1,0 +1,113 @@
+[
+    {
+      "timestamp": "2025-02-25T12:00:00Z",
+      "application": "user-service",
+      "application_ci_id": "o34oqdoBLG",
+      "log_level": "DEBUG",
+      "message": "Unauthorized access attempt detected",
+      "host": "server-04",
+      "response_time_ms": 1273,
+      "cpu_usage": 56.72,
+      "memory_usage_mb": 595
+    },
+    {
+      "timestamp": "2025-02-25T12:00:05Z",
+      "application": "order-service",
+      "application_ci_id": "ZOBEgMMq7p",
+      "log_level": "ERROR",
+      "message": "Failed to retrieve user data",
+      "host": "server-04",
+      "response_time_ms": 1477,
+      "cpu_usage": 42.88,
+      "memory_usage_mb": 552
+    },
+    {
+      "timestamp": "2025-02-25T12:00:10Z",
+      "application": "payment-service",
+      "application_ci_id": "DaEwhAtyGP",
+      "log_level": "WARN",
+      "message": "Failed to retrieve user data",
+      "host": "server-04",
+      "response_time_ms": 2074,
+      "cpu_usage": 11.78,
+      "memory_usage_mb": 555
+    },
+    {
+      "timestamp": "2025-02-25T12:00:15Z",
+      "application": "order-service",
+      "application_ci_id": "cvA014IqnP",
+      "log_level": "WARN",
+      "message": "Payment transaction processed",
+      "host": "server-04",
+      "response_time_ms": 493,
+      "cpu_usage": 17.45,
+      "memory_usage_mb": 1089
+    },
+    {
+      "timestamp": "2025-02-25T12:00:20Z",
+      "application": "payment-service",
+      "application_ci_id": "Cx6yI6oTKT",
+      "log_level": "WARN",
+      "message": "Unauthorized access attempt detected",
+      "host": "server-04",
+      "response_time_ms": 208,
+      "cpu_usage": 52.22,
+      "memory_usage_mb": 581
+    },
+    {
+      "timestamp": "2025-02-25T12:00:25Z",
+      "application": "user-service",
+      "application_ci_id": "CSuXdo1Y7q",
+      "log_level": "INFO",
+      "message": "Email notification sent",
+      "host": "server-03",
+      "response_time_ms": 436,
+      "cpu_usage": 27.06,
+      "memory_usage_mb": 646
+    },
+    {
+      "timestamp": "2025-02-25T12:00:30Z",
+      "application": "user-service",
+      "application_ci_id": "WdasWTX5eI",
+      "log_level": "INFO",
+      "message": "Order placed successfully",
+      "host": "server-03",
+      "response_time_ms": 789,
+      "cpu_usage": 61.46,
+      "memory_usage_mb": 637
+    },
+    {
+      "timestamp": "2025-02-25T12:00:35Z",
+      "application": "user-service",
+      "application_ci_id": "06aN0w9CO5",
+      "log_level": "ERROR",
+      "message": "Email notification sent",
+      "host": "server-04",
+      "response_time_ms": 1589,
+      "cpu_usage": 24.46,
+      "memory_usage_mb": 527
+    },
+    {
+      "timestamp": "2025-02-25T12:00:40Z",
+      "application": "test-service",
+      "application_ci_id": "app-ci-id-123",
+      "log_level": "DEBUG",
+      "message": "Payment transaction processed",
+      "host": "server-04",
+      "response_time_ms": 566,
+      "cpu_usage": 27.01,
+      "memory_usage_mb": 1007
+    },
+    {
+      "timestamp": "2025-02-25T12:00:45Z",
+      "application": "test-service",
+      "application_ci_id": "app-ci-id-123",
+      "log_level": "ERROR",
+      "message": "Background job execution started",
+      "host": "server-04",
+      "response_time_ms": 2621,
+      "cpu_usage": 65.3,
+      "memory_usage_mb": 1200
+    }
+  ]
+  

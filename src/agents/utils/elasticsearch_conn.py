@@ -1,5 +1,6 @@
 #from elasticsearch import Elasticsearch
 from typing import List
+import uuid
 
 from agents.utils.mock_tools import get_mock_data
 
@@ -30,7 +31,17 @@ class ElasticsearchMock:
             if match:
                 result.append(item)    
 
-        return {'hits': {'hits': result}}
+        return {'hits': 
+                {
+                    'total': len(result),
+                    'hits': [{
+                        '_index': index,
+                        '_type': '_doc',
+                        '_id': uuid.uuid4(),
+                        '_score': 1.0,
+                        '_source': r
+                    } for r in result]
+                }}
 
 
 def get_elasticsearch_client(is_mock: bool = True):

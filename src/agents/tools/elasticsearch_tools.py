@@ -53,3 +53,35 @@ def tool_query_program_logs(begin_date: str, end_date: str, application: str=Non
 
     return f"Found {len(logs)} logs"+('\n'.join([str(l) for l in logs]))
     
+
+@tool
+def tool_query_program_metrics(begin_date: str, end_date: str, application_ci_id: str):
+    """
+    This tool will query program metrics based on the provided application_ci_id and date periods.
+    """
+    logger.info(">> TOOL USE: tool_query_program_metrics")
+
+    client = get_elasticsearch_client()
+
+    query = {
+        "query": {
+            "bool": {
+                "must": [
+                    {"range": {"timestamp": {"gte": begin_date, "lte": end_date}}},
+                    {"match": {"application_ci_id": application_ci_id}}
+                ]
+            }
+        }
+    }
+
+    response = client.search(index='obs_app_metrics', body=query)
+
+    hits = response['hits']['hits']
+    metrics = []
+    for hit in hits:
+        metric = hit['_source']
+        metrics.append(metric)
+
+    logger.info(f"Found {len(metrics)} metrics")
+
+    return f"Found {len(metrics)} metrics"+('\n'.join([str(m) for m in metrics]))

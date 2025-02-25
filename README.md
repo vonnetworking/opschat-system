@@ -11,7 +11,7 @@ A basic operations chat application integrating a Flask-based back-end with a we
 # Setup
 ```bash
 ./install-node.sh
-pip install -r src/agent/requirements.txt
+pip install -r src/requirements.txt
 ```
 
 ## Usage

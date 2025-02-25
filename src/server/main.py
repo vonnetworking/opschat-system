@@ -5,18 +5,13 @@ from uuid import uuid4
 from fastapi import FastAPI, HTTPException, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-from tiktoken import get_encoding
 
-import dotenv
 from server.schemas import ChatMessage, ChatRequest, ChatCompletionDelta, ChatCompletionChoice, ChatCompletionChunk
-from typing import List, Generator
+from typing import List, Generator, Dict, Any
 
 import uvicorn
 
 from agents.main_agent import MainAgent
-
-dotenv.load_dotenv()
-MAX_HISTORY_TOKENS = int(os.getenv("MAX_HISTORY_TOKENS", 4096))
 
 
 # ------------------------------------------------------------------
@@ -41,57 +36,15 @@ app.add_middleware(
 router = APIRouter()
 
 
-def summarize_history(history: str) -> str:
-    """Summarizes the conversation history using the LLM."""
-    if history:
-        return main_agent.generate_conversation_summary({"messages": [{"role": "user", "content": history}]})
-    return ""
-
-
-def truncate_history(messages: list) -> str:
-    """Truncates the conversation history to fit within the token budget."""
-    history = ""
-    history_tokens = 0
-    ENCODING = get_encoding("cl100k_base")
- 
-    for message in messages:
-        content = f"{message.role}: {message.content}\n"
-
-        num_tokens = len(ENCODING.encode(content))
-
-        if history_tokens + num_tokens > MAX_HISTORY_TOKENS:
-            logger.info("History exceeds token limit, summarizing...")
-            return history, True  # Indicate that summarization is needed
-
-        history += content
-        history_tokens += num_tokens
-
-    return history, False  # Indicate that summarization is not needed
-
-
 # Modify extract_message to use ChatRequest
-def extract_message(chat_req: ChatRequest) -> str:
-    messages = chat_req.messages[:-1]  # Exclude the last message
-    history, needs_summary = truncate_history(messages)
-
-    if needs_summary:
-        history = summarize_history(history)
-
-    last_message = chat_req.messages[-1]
-    logger.info("last_message: %s", last_message)
-    if (last_message.role != "user"):
-        raise HTTPException(
-            status_code=400,
-            detail="The last message must be from the user."
-        )
-    query = last_message.content
-    if not query or isinstance(query, list):
-        raise HTTPException(status_code=400, detail="The last message does not have text content.")
-    assert isinstance(query, str)
-    
-    # Include history in the query
-    final_query = f"{history}\nuser: {query}"
-    return final_query
+def extract_messages(chat_req: ChatRequest) -> list | None:
+    if (chat_req.messages is None) or (len(chat_req.messages) == 0):
+        return None
+    first_message = chat_req.messages[0]
+    # skip the initial system message if present
+    if first_message.role != "user":
+        return [m.model_dump() for m in chat_req.messages[1:]]
+    return [m.model_dump() for m in chat_req.messages]
 
 
 def openai_stream_generator(response_gen: Generator[str, None, None]):
@@ -193,10 +146,10 @@ async def chat(chat_req: ChatRequest):
             headers={"Transfer-Encoding": "chunked"}
         )
 
-    query: str = extract_message(chat_req)
+    messages: list | None = extract_messages(chat_req)
  
     response_stream = main_agent.stream(
-        {"messages": [("user", query)]},
+        {"messages": messages},
         stream_mode=["updates"],
         config={"configurable": {"thread_id": "dummy"}}
     )

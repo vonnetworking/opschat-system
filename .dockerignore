@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.git
+.github
+.gitignore
+.vscode
+.idea
+*.md
+*.log
+chat-ui/node_modules/
+node_modules/
+!.env*

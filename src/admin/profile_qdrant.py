@@ -1,7 +1,12 @@
-
+import os
 from qdrant_client import QdrantClient
 
-client = QdrantClient(host="localhost", port=6333)
+# Get Qdrant connection info from environment variables or use defaults
+QDRANT_HOST = os.environ.get("QDRANT_HOST", "romantic_solomon")
+QDRANT_PORT = int(os.environ.get("QDRANT_PORT", "6333"))
+
+print(f"Connecting to Qdrant at {QDRANT_HOST}:{QDRANT_PORT}")
+client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
 
 print(client.get_collections())
 

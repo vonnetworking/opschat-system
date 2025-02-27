@@ -3,6 +3,31 @@
 ## Project Overview
 A basic operations chat application integrating a Flask-based back-end with a web-based Chat UI.
 
+
+
+
+
+## How to run:
+
+```bash
+# Build the application containers
+./opschat.sh build # add --new if need to build without any caching
+
+# Run the application
+./opschat.sh run
+
+```
+### Accessing the Application
+
+After running `./opschat.sh run`, you'll see output similar to:
+
+```bash
+🔹 Container name: ye-opschat-4531
+🔹 FastAPI: http://10.128.135.97:41937 or http://localhost:41937
+🔹 Chat UI: http://10.128.135.97:50137 or http://localhost:50137
+```
+
+-------- OBSOLETE TO CLEAN UP LATER ON-----
 ## Requirements
 
 - Python 3.13

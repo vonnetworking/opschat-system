@@ -93,34 +93,3 @@ or using the Python module:
 cd ~/fm-opschat/src
 python -m server.main
 ```
-
-# OpsChatUI
-
-## Networking Guide
-
-OpsChatUI uses Docker networking to connect multiple services:
-
-### Access from Your Browser
-- **Chat UI**: http://localhost:5173 (or dynamically assigned port)
-- **FastAPI Backend**: http://localhost:1234 (or dynamically assigned port)
-
-### Inter-Container Communication
-Services inside Docker communicate using container names:
-- MongoDB: `mongo-chatui:27017`
-- Qdrant: `romantic_solomon:6333`
-- Ollama: `ollama:11434`
-- FastAPI (from ChatUI): `localhost:1234` (as they share the same container)
-
-### Configuration Files
-Key files that handle networking:
-- `opschat.sh`: Creates Docker network, connects containers, publishes ports
-- `docker-entrypoint.sh`: Sets environment variables for services  
-- `chat-ui/.env.local`: Configures MongoDB and API connections
-
-### Run the Application
-```bash
-./opschat.sh all   # Build and run
-./opschat.sh run   # Run only
-```
-
-Check the displayed URLs once the application starts.

@@ -109,37 +109,9 @@ echo "✅ FastAPI server is running on port 1234"
 # Start the Chat UI
 cd /app/chat-ui
 echo "Starting Chat UI on port 5173 (mapped to external port $HOST_UI_PORT)..."
+echo ".env.local has:"
+cat .env.local
 
-# Create .env.local file with necessary environment variables
-cat > .env.local <<EOL
-MONGODB_URL=$MONGODB_URI
-MONGO_DB_NAME="opschat-agents"
-
-# Auth disable
-AUTH_ENABLED="false"
-CLIENT_ID="dummy"
-CLIENT_SECRET="dummy"
-PROVIDER_URL="dummy"
-SCOPES="dummy"
-NAME_CLAIM="dummy"
-TOLERANCE="dummy"
-RESOURCE="dummy"
-
-# Model configuration
-MODELS=\`[
-    {
-      "id": "opschat-agents",
-      "name": "opschat-agents",
-      "displayName": "opschat agent backend",
-      "endpoints": [
-        {
-          "type": "openai",
-          "baseURL": "http://localhost:1234/v1",
-        }
-      ]
-    },
-  ]\`
-EOL
 
 echo "Created .env.local file with connection information"
 

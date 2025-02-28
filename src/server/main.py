@@ -132,6 +132,13 @@ def openai_stream_generator(response_gen: Generator[str, None, None]):
 def generate_conversation_title(chat_req: ChatRequest) -> str:
     return main_agent.generate_conversation_summary(chat_req)
 
+# Add health check endpoint
+@app.get("/health")
+def health():
+    """Health check endpoint for monitoring"""
+    return {"status": "ok", "message": "OpsChat App API is running"}
+
+
 @app.post("/v1/chat/completions")
 async def chat(chat_req: ChatRequest):
     logger.info('Received chat request: %s', chat_req.model_dump())

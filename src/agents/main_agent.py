@@ -30,7 +30,7 @@ PROMPT_FILE_DEFAULT = 'MAIN.txt'
 def get_llm():
     bedrock_client = boto3.client(
         service_name="bedrock-runtime",
-        region_name="us-east-1",
+        region_name=os.environ.get("AWS_REGION", "us-east-1"),
     )
     bedrock_llm = ChatBedrock(
         model=MODEL_NAME_DEFAULT,

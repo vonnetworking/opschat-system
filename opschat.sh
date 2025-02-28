@@ -38,6 +38,18 @@ get_aws_credentials() {
     AWS_SECRET_ACCESS_KEY=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE_NAME | jq -r '.SecretAccessKey')
     AWS_SESSION_TOKEN=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE_NAME | jq -r '.Token')
     
+    # Get the availability zone and extract the region
+    AZ=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone)
+    AWS_REGION=$(echo "$AZ" | sed 's/.$//')
+
+    # If we couldn't determine the region, fall back to us-east-1
+    if [ -z "$AWS_REGION" ]; then
+        echo "WARNING: Couldn't determine AWS region, falling back to us-east-1" >&2
+        AWS_REGION="us-east-1"
+    else
+        echo "Detected AWS Region: $AWS_REGION" >&2
+    fi
+
     # Validate we got credentials
     if [ -z "$AWS_ACCESS_KEY_ID" ] || [ "$AWS_ACCESS_KEY_ID" = "null" ]; then
         echo "ERROR: Failed to get AWS Access Key ID" >&2
@@ -55,7 +67,7 @@ get_aws_credentials() {
     fi
     
     # Return only the environment variables, without any other output
-    echo "-e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN -e AWS_DEFAULT_REGION=us-east-1 -e AWS_REGION=us-east-1"
+    echo "-e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN -e AWS_DEFAULT_REGION=$AWS_REGION -e AWS_REGION=$AWS_REGION"
 }
 
 # Find running service containers
@@ -93,14 +105,14 @@ USER_PREFIX=$(echo $USER_NAME | tr -d -c '[:alnum:]' | cut -c1-8)
 TIMESTAMP=$(date +%s | cut -c7-10)
 OPSCHAT_CONTAINER="${USER_PREFIX}-opschat-${TIMESTAMP}"
 NETWORK_NAME="opschat-network"
-IMAGE_NAME="opschat-ui-backend-${USER_PREFIX}"
+IMAGE_NAME="opschat-app-${USER_PREFIX}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 # Function to show help
 show_help() {
-    echo "OpsChatUI - Build and Run Script"
+    echo "OpsChat App - Build and Run Script"
     echo "--------------------------------"
     echo "Usage: $0 [command] [options]"
     echo ""
@@ -118,7 +130,7 @@ show_help() {
 
 # Simple function to build the Docker image
 build() {
-    echo "Building OpsChatUI Docker image for user ${USER_NAME}..."
+    echo "Building OpsChat App Docker image for user ${USER_NAME}..."
     
     BUILD_ARGS=""
     if [ "$FORCE_REBUILD" = true ]; then
@@ -204,12 +216,13 @@ run() {
     echo "Verifying AWS credentials..."
     TOKEN=$(curl -s -X PUT 'http://169.254.169.254/latest/api/token' -H 'X-aws-ec2-metadata-token-ttl-seconds: 21600')
     ROLE_NAME=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/iam/security-credentials/)
-    AWS_ACCESS_KEY_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE_NAME | jq -r '.AccessKeyId')
-    AWS_SECRET_ACCESS_KEY=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE_NAME | jq -r '.SecretAccessKey')
-    AWS_SESSION_TOKEN=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE_NAME | jq -r '.Token')
+    CREDENTIALS=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE_NAME)
+    AWS_ACCESS_KEY_ID=$(echo "$CREDENTIALS" | jq -r '.AccessKeyId')
+    AWS_SECRET_ACCESS_KEY=$(echo "$CREDENTIALS" | jq -r '.SecretAccessKey')
+    AWS_SESSION_TOKEN=$(echo "$CREDENTIALS" | jq -r '.Token')
     
     # Test credentials directly before running container
-    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN AWS_DEFAULT_REGION=us-east-1 aws sts get-caller-identity
+    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN AWS_DEFAULT_REGION=$(echo "$CREDENTIALS" | jq -r '.Region // "us-east-1"') aws sts get-caller-identity
     if [ $? -ne 0 ]; then
         echo "WARNING: AWS credentials test failed. Container may not have proper AWS access."
     else
@@ -237,7 +250,7 @@ run() {
     ENV_VARS="$ENV_VARS $AWS_ENV_VARS"
     
     # Run the container with all needed connections and restart policy
-    echo "Starting OpsChatUI container with AWS credentials..."
+    echo "Starting OpsChat App container with AWS credentials..."
     docker run -d \
         --name $OPSCHAT_CONTAINER \
         --network $NETWORK_NAME \
@@ -259,7 +272,7 @@ run() {
     # Format fixed to remove extra slash in URL
     if [ "$CONTAINER_STATUS" = "running" ]; then
         printf "==========================================================================================\n"
-        printf "🚀 OpsChatUI is running!\n"
+        printf "🚀 OpsChat App is running!\n"
         printf "🔹 Container name: ${OPSCHAT_CONTAINER}\n"
         printf "🔹 FastAPI: http://${HOST_IP}:${API_PORT} or http://localhost:${API_PORT}\n"
         printf "🔹 Chat UI: http://${HOST_IP}:${UI_PORT} or http://localhost:${UI_PORT}\n\n"

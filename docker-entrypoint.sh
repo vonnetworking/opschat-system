@@ -89,14 +89,6 @@ if [ ! -L "/app/server" ]; then
     ln -s /app/src/server /app/server
 fi
 
-# Fix git issue by initializing a git repo in the chat-ui directory
-cd /app/chat-ui
-echo "Initializing git repository to prevent git errors..."
-git init >/dev/null 2>&1
-git config --global user.email "opschat@example.com"
-git config --global user.name "OpsChatUI"
-git add . >/dev/null 2>&1
-git commit -m "Initial commit" >/dev/null 2>&1 || echo "Git commit failed but continuing"
 
 # Start the FastAPI server
 echo "Starting FastAPI server on port 1234..."

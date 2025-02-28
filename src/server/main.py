@@ -35,11 +35,6 @@ app.add_middleware(
 )
 router = APIRouter()
 
-# Add health check endpoint
-@app.get("/health")
-def health():
-    """Health check endpoint for monitoring"""
-    return {"status": "ok", "message": "OpsChat App API is running"}
 
 # Modify extract_message to use ChatRequest
 def extract_messages(chat_req: ChatRequest) -> list | None:
@@ -137,12 +132,12 @@ def openai_stream_generator(response_gen: Generator[str, None, None]):
 def generate_conversation_title(chat_req: ChatRequest) -> str:
     return main_agent.generate_conversation_summary(chat_req)
 
-
 # Add health check endpoint
 @app.get("/health")
 def health():
     """Health check endpoint for monitoring"""
     return {"status": "ok", "message": "OpsChat App API is running"}
+
 
 @app.post("/v1/chat/completions")
 async def chat(chat_req: ChatRequest):

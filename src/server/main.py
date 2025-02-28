@@ -1,17 +1,18 @@
-import json
 import logging
-from typing import Dict, Any, Iterator, Generator, List, Union, Optional
+import os
 from time import time
 from uuid import uuid4
 from fastapi import FastAPI, HTTPException, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse, JSONResponse
-import uvicorn
-from pydantic import BaseModel
-# New import for schemas
+from fastapi.responses import StreamingResponse
+
 from server.schemas import ChatMessage, ChatRequest, ChatCompletionDelta, ChatCompletionChoice, ChatCompletionChunk
+from typing import List, Generator
+
+import uvicorn
 
 from agents.main_agent import MainAgent
+
 
 # ------------------------------------------------------------------
 # Logging Setup
@@ -36,19 +37,14 @@ router = APIRouter()
 
 
 # Modify extract_message to use ChatRequest
-def extract_message(chat_req: ChatRequest) -> str:
-    last_message = chat_req.messages[-1]
-    logger.info("last_message: %s", last_message)
-    if (last_message.role != "user"):
-        raise HTTPException(
-            status_code=400,
-            detail="The last message must be from the user."
-        )
-    query = last_message.content
-    if not query or isinstance(query, list):
-        raise HTTPException(status_code=400, detail="The last message does not have text content.")
-    assert isinstance(query, str)
-    return query
+def extract_messages(chat_req: ChatRequest) -> list | None:
+    if (chat_req.messages is None) or (len(chat_req.messages) == 0):
+        return None
+    first_message = chat_req.messages[0]
+    # skip the initial system message if present
+    if first_message.role != "user":
+        return [m.model_dump() for m in chat_req.messages[1:]]
+    return [m.model_dump() for m in chat_req.messages]
 
 
 def openai_stream_generator(response_gen: Generator[str, None, None]):
@@ -150,10 +146,10 @@ async def chat(chat_req: ChatRequest):
             headers={"Transfer-Encoding": "chunked"}
         )
 
-    query: str = extract_message(chat_req)
+    messages: list | None = extract_messages(chat_req)
  
     response_stream = main_agent.stream(
-        {"messages": [("user", query)]},
+        {"messages": messages},
         stream_mode=["updates"],
         config={"configurable": {"thread_id": "dummy"}}
     )

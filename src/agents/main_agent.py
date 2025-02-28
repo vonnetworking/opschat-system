@@ -8,7 +8,6 @@ from langchain_core.tools.base import BaseTool
 from langchain_core.prompts import PromptTemplate
 
 from langgraph.prebuilt import create_react_agent
-from langgraph.checkpoint.memory import MemorySaver
 import boto3
 
 from agents.tools.common import (
@@ -62,7 +61,7 @@ class MainAgent:
         # Fixed date to work with the application log
         ).format(system_time='2025-02-01T15:35:31.051465')
 
-        self.app = create_react_agent(self.model, self.tools, prompt=str(prompt), checkpointer=MemorySaver())
+        self.app = create_react_agent(self.model, self.tools, prompt=str(prompt))
 
 
     def get_prompt_text(self, file_name=PROMPT_FILE_DEFAULT):
@@ -81,12 +80,12 @@ class MainAgent:
 
         return response
 
-    def generate_conversation_summary(self, chat_req) -> str:
+    def generate_conversation_summary(self, messages: dict) -> str:
         # Directly invoke the LLM with a specific summary prompt
         prompt = PromptTemplate.from_template(
-            "Summarize this conversation in less than 15 tokens, starting with an emoji: {chat_req}"
+            "Summarize this conversation in less than 15 tokens, starting with an emoji: {messages}"
         )
-        message = prompt.format(chat_req=str(chat_req))
+        message = prompt.format(messages=str(messages))
 
         # Invoke the LLM directly
         response = self.model.invoke(message)

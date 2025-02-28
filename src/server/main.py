@@ -35,14 +35,11 @@ app.add_middleware(
 )
 router = APIRouter()
 
-<<<<<<< HEAD
-=======
 # Add health check endpoint
 @app.get("/health")
 def health():
     """Health check endpoint for monitoring"""
     return {"status": "ok", "message": "OpsChat App API is running"}
->>>>>>> 371d1cc (updated the code)
 
 # Modify extract_message to use ChatRequest
 def extract_messages(chat_req: ChatRequest) -> list | None:

@@ -1,24 +1,162 @@
 [
     {
-        "description": "Automated PRODSYSTEM deployment of AP1234 web_back_end - AB0123",
-        "short_description": "Automated PRODSYSTEM deployment of AP1234 ABC-DE-GUI - AB0123",
-        "start_date": "2025-02-01 00:00:00",
-        "end_date": "2025-02-01 10:00:00",
-        "work_start":"2025-02-01 00:15:00",
-        "work_end":"2025-02-01 02:03:00",
+        "description": "Automated deployment of PL1001 Core Management \u2013 SA9929 Setup10",
+        "end_date": "2025-01-14 11:59:59",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/899aabd855dd3e64fe53321c930d",
+            "value": "899aabd855dd3e64fe53321c930d"
+        },
+        "short_description": "Deployment of PL1001 Core Management \u2013 SA9929 Setup",
+        "start_date": "2025-01-10 10:00:00",
         "u_down_time": "No",
         "u_environment": "Production",
-        "u_status_reason": "Successful"
+        "u_stage": "in progress",
+        "u_status_reason": "Pending Approval",
+        "work_end": "2025-01-10 10:30:00",
+        "work_start": "2025-01-10 10:05:00"
     },
     {
-        "description": "updated vpc related network templates by deploying network CFTs",
-        "short_description": "I00123 - Amazon Web Services configuration changes for platform security and maintenance of web_back_end",
-        "start_date": "2025-02-02 00:00:00",
-        "end_date": "2025-02-02 10:00:00",
-        "work_start":"2025-02-02 00:15:00",
-        "work_end":"2025-02-02 02:03:00",
+        "description": "Data Migration for SU3090 Configuration Update",
+        "end_date": "2025-01-18 17:05:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/bc7e64fe53321c930d7d21b92ab",
+            "value": "bc7e64fe53321c930d7d21b92ab"
+        },
+        "short_description": "Data Migration SU3090 Update",
+        "start_date": "2025-01-15 08:00:00",
+        "u_down_time": "No",
+        "u_environment": "Staging",
+        "u_stage": "complete",
+        "u_status_reason": "Completed",
+        "work_end": "2025-01-17 16:45:00",
+        "work_start": "2025-01-15 08:15:00"
+    },
+    {
+        "description": "System Integration Testing for FS781 \u2013 API-Gateway",
+        "end_date": "2025-01-21 14:23:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/xyz1a2b3c4d5e6f7g8h9i1234567",
+            "value": "xyz1a2b3c4d5e6f7g8h9i1234567"
+        },
+        "short_description": "SIT for FS781 \u2013 API-Gateway",
+        "start_date": "2025-01-20 09:00:00",
+        "u_down_time": "Yes",
+        "u_environment": "Testing",
+        "u_stage": "in progress",
+        "u_status_reason": "Implementation",
+        "work_end": "2025-01-20 15:30:00",
+        "work_start": "2025-01-20 09:15:00"
+    },
+    {
+        "description": "VM Configuration for CR5823 Virtual Machine Storage",
+        "end_date": "2025-01-23 19:15:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/za3b2c1a9d8f7e6d5c1234567",
+            "value": "za3b2c1a9d8f7e6d5c1234567"
+        },
+        "short_description": "Configuration CR5823 VM Storage",
+        "start_date": "2025-01-22 10:00:00",
+        "u_down_time": "No",
+        "u_environment": "Development",
+        "u_stage": "scheduled",
+        "u_status_reason": "Scheduled",
+        "work_end": "2025-01-22 12:00:00",
+        "work_start": "2025-01-22 10:30:00"
+    },
+    {
+        "description": "Firewall Optimization for Network Security SS4310 enhancement",
+        "end_date": "2025-01-30 12:22:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/fg3245678bd4321cf5a6e",
+            "value": "fg3245678bd4321cf5a6e"
+        },
+        "short_description": "Network Security Optimization SS4310",
+        "start_date": "2025-01-28 15:00:00",
+        "u_down_time": "Yes",
+        "u_environment": "Production",
+        "u_stage": "implementation",
+        "u_status_reason": "Reviewed",
+        "work_end": "2025-01-29 11:00:00",
+        "work_start": "2025-01-28 16:00:00"
+    },
+    {
+        "description": "Service Deployment for Application HX2049 \u2013 Verification10",
+        "end_date": "2025-01-25 13:40:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/fh823b7d21c9a8e7f634",
+            "value": "fh823b7d21c9a8e7f634"
+        },
+        "short_description": "Deployment Verification for HX2049",
+        "start_date": "2025-01-23 13:00:00",
+        "u_down_time": "No",
+        "u_environment": "Integration",
+        "u_stage": "preparation",
+        "u_status_reason": "Pending Review",
+        "work_end": "2025-01-23 17:45:00",
+        "work_start": "2025-01-23 13:10:00"
+    },
+    {
+        "description": "Upgrade Pathway for Platform Enhancement in BY7682 \u2013 Data Mode",
+        "end_date": "2025-01-21 15:05:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/bg23f1a2e9d8b7c6f9e032",
+            "value": "bg23f1a2e9d8b7c6f9e032"
+        },
+        "short_description": "Enhancement BY7682 Platform Upgrade",
+        "start_date": "2025-01-20 08:45:00",
+        "u_down_time": "Yes",
+        "u_environment": "Staging",
+        "u_stage": "testing",
+        "u_status_reason": "In Process",
+        "work_end": "2025-01-20 14:30:00",
+        "work_start": "2025-01-20 09:00:00"
+    },
+    {
+        "description": "Automated Script Execution for KA1235 Scheduler Task",
+        "end_date": "2025-01-28 22:15:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/38f9a12b7c8d6e5f4321010",
+            "value": "38f9a12b7c8d6e5f4321010"
+        },
+        "short_description": "Script Execution KA1235 Scheduler",
+        "start_date": "2025-01-27 11:15:00",
         "u_down_time": "No",
         "u_environment": "Production",
-        "u_status_reason": "Successful"
+        "u_stage": "verification",
+        "u_status_reason": "Finalized",
+        "work_end": "2025-01-27 13:45:00",
+        "work_start": "2025-01-27 11:45:00"
+    },
+    {
+        "description": "Performance Enhancement for TG4391 System Backend",
+        "end_date": "2025-01-12 16:55:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/ccab7d5c1e4f8a632342f2",
+            "value": "ccab7d5c1e4f8a632342f2"
+        },
+        "short_description": "Backend Enhancement TG4391 System",
+        "start_date": "2025-01-11 09:50:00",
+        "u_down_time": "Yes",
+        "u_environment": "Development",
+        "u_stage": "in review",
+        "u_status_reason": "Approved",
+        "work_end": "2025-01-11 14:00:00",
+        "work_start": "2025-01-11 10:30:00"
+    },
+    {
+        "description": "Infrastructure Expansion for WZ0043 Enterprise Solutions",
+        "end_date": "2025-01-29 17:20:00",
+        "requested_by": {
+            "link": "https://abc.service-now.com/api/now/table/sys_user/319b8a5d6f2e4c7b1e0d9b",
+            "value": "319b8a5d6f2e4c7b1e0d9b"
+        },
+        "short_description": "Expansion WZ0043 Enterprise",
+        "start_date": "2025-01-28 07:50:00",
+        "u_down_time": "No",
+        "u_environment": "Production",
+        "u_stage": "execution",
+        "u_status_reason": "Under Observation",
+        "work_end": "2025-01-28 14:00:00",
+        "work_start": "2025-01-28 08:15:00"
     }
 ]

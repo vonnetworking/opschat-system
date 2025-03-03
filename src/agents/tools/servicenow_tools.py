@@ -107,7 +107,7 @@ def tool_search_cmdb_ci(app_name: str=None, class_name: str=None, ci_id: str=Non
     if not any([app_name, class_name, ci_id]):
         raise ValueError("At least one of app_name, class_name, or ci_id must be provided.")
 
-    client = get_servicenow_client(is_mock=True, mock_data_source='cmdb_ci')
+    client = get_servicenow_client(is_mock=True, mock_data_source='cmdb')
 
     gr = client.GlideRecord('cmdb_rel_ci')
     gr.limit = 20

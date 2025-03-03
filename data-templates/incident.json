@@ -1,16 +1,162 @@
 [
     {
-        "description": "ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID123) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD; System Name=web_back_end; Jobname=JOBTRAC; System Date=12/12/12; System Time=12:12:12;",
-        "short_description": "ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD",
-        "state": "7",
-        "u_current_business_impact": "",
-        "u_current_status": ""
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/abcd1234",
+            "value": "abcd1234"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/efgh5678",
+            "value": "efgh5678"
+        },
+        "description": "ALERT: System X encountered an unexpected fault. Please investigate promptly. mock-app-id",
+        "priority": "2",
+        "short_description": "System X fault alert",
+        "state": "2",
+        "u_current_business_impact": "Critical system failure affecting end-users.",
+        "u_current_status": "Pending investigation"
     },
     {
-        "description": "ASDE 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID124) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD; System Name=ABC1; Jobname=JOBTRAC; System Date=12/12/12; System Time=12:12:12;",
-        "short_description": "ASDF 12:12:12 OPCODE JOBFAIL TRACEID Completed Abnormally - Event(ID) Ver(123.0001) MAXIMUM CONDITION CODE CIID: ABCD",
-        "state": "7",
-        "u_current_business_impact": "",
-        "u_current_status": ""
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/ijkl9012",
+            "value": "ijkl9012"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/mnop3456",
+            "value": "mnop3456"
+        },
+        "description": "Anomaly detected in data processing pipeline. Verify integrity and assess action.",
+        "priority": "3",
+        "short_description": "Data processing anomaly detected",
+        "state": "3",
+        "u_current_business_impact": "Potential delay in data services.",
+        "u_current_status": "Under analysis by Data Team"
+    },
+    {
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/qrs7890",
+            "value": "qrs7890"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/tuv1234",
+            "value": "tuv1234"
+        },
+        "description": "Server connectivity failure identified; impacting several modules. Requires immediate fix.",
+        "priority": "1",
+        "short_description": "Connectivity failure on server",
+        "state": "1",
+        "u_current_business_impact": "Major service disruption across multiple systems.",
+        "u_current_status": "Escalated to Network Team"
+    },
+    {
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/wx123456",
+            "value": "wx123456"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/yza9876",
+            "value": "yza9876"
+        },
+        "description": "Routine maintenance required for System Y. Schedule downtime for minimal impact.",
+        "priority": "4",
+        "short_description": "Scheduled maintenance notification",
+        "state": "4",
+        "u_current_business_impact": "None expected if downtime is planned correctly.",
+        "u_current_status": "Awaiting maintenance window confirmation"
+    },
+    {
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/uvw34567",
+            "value": "uvw34567"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/bcd1234",
+            "value": "bcd1234"
+        },
+        "description": "Performance degradation noted on Application Z. Threshold breaches initiated alert.",
+        "priority": "3",
+        "short_description": "Performance degradation - Application Z",
+        "state": "2",
+        "u_current_business_impact": "Possible slowdowns in end-user tasks.",
+        "u_current_status": "Optimizations in progress"
+    },
+    {
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/efg67890",
+            "value": "efg67890"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/hij13579",
+            "value": "hij13579"
+        },
+        "description": "Resource allocation exceeded for VM cluster. Review needed to prevent service interruption.",
+        "priority": "2",
+        "short_description": "Resource allocation alert - VM Cluster",
+        "state": "3",
+        "u_current_business_impact": "Potential resource availability issues if unresolved.",
+        "u_current_status": "Pending reallocation plan"
+    },
+    {
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/klm24680",
+            "value": "klm24680"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/nop98754",
+            "value": "nop98754"
+        },
+        "description": "Security breach detected on the critical network. Immediate action required. mock-app-id",
+        "priority": "1",
+        "short_description": "Critical network security breach",
+        "state": "1",
+        "u_current_business_impact": "High risk of unauthorized access and data loss.",
+        "u_current_status": "Interventions underway"
+    },
+    {
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/qrxabcdef",
+            "value": "qrxabcdef"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/stu67890",
+            "value": "stu67890"
+        },
+        "description": "Software update required for Compliance Policy Enforcement. Plan upgrade cycle.",
+        "priority": "4",
+        "short_description": "Scheduled software update - Compliance tool",
+        "state": "2",
+        "u_current_business_impact": "Non-compliance risks if not updated.",
+        "u_current_status": "Pending deployment schedule"
+    },
+    {
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/vwx02134",
+            "value": "vwx02134"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/yzz19987",
+            "value": "yzz19987"
+        },
+        "description": "Database replication lag detected. Sync operations impacted.",
+        "priority": "3",
+        "short_description": "Database replication lag",
+        "state": "3",
+        "u_current_business_impact": "Delayed transaction processing.",
+        "u_current_status": "DB team is investigating"
+    },
+    {
+        "assigned_to": {
+            "link": "https://xyz.service-now.com/api/now/table/sys_user/aaa24567",
+            "value": "aaa24567"
+        },
+        "cmdb_ci": {
+            "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/bbb13579",
+            "value": "bbb13579"
+        },
+        "description": "Unexpected shutdown of server cluster. Investigate cause and restore services.",
+        "priority": "2",
+        "short_description": "Server cluster shutdown",
+        "state": "1",
+        "u_current_business_impact": "Large-scale service outage affecting users.",
+        "u_current_status": "Recovery procedures initiated"
     }
 ]

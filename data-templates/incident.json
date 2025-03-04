@@ -38,7 +38,7 @@
         },
         "cmdb_ci": {
             "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/tuv1234",
-            "value": "tuv1234"
+            "value": "mock-app-id"
         },
         "description": "Server connectivity failure identified; impacting several modules. Requires immediate fix.",
         "priority": "1",
@@ -70,7 +70,7 @@
         },
         "cmdb_ci": {
             "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/bcd1234",
-            "value": "bcd1234"
+            "value": "mock-app-id"
         },
         "description": "Performance degradation noted on Application Z. Threshold breaches initiated alert.",
         "priority": "3",
@@ -150,7 +150,7 @@
         },
         "cmdb_ci": {
             "link": "https://xyz.service-now.com/api/now/table/cmdb_ci/bbb13579",
-            "value": "bbb13579"
+            "value": "mock-app-id"
         },
         "description": "Unexpected shutdown of server cluster. Investigate cause and restore services.",
         "priority": "2",

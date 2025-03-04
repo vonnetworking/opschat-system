@@ -8,13 +8,13 @@ logger.setLevel(INFO)
 from agents.utils.servicenow_conn import get_servicenow_client, GlideRecord
 
 @tool
-def tool_search_incidents(affected_ci: str) -> str:
+def tool_search_incidents(application_ci_id: str) -> str:
     """Search for recent ServiceNow incidents and return their details."""
     client = get_servicenow_client(is_mock=True, mock_data_source='incident')
 
     gr = client.GlideRecord('incident')
     gr.limit = 100
-    gr.add_query("affected_ci", affected_ci)
+    gr.add_query("affected_ci", application_ci_id)
     gr.query()
 
     if not gr.has_next():
@@ -30,6 +30,8 @@ def tool_search_incidents(affected_ci: str) -> str:
 
     incidents = []
     for record in gr:
+        if str(getattr(record, "cmdb_ci")) != application_ci_id:
+            continue
         incident = {}
         for field in fields:
             try:
@@ -53,13 +55,13 @@ def tool_search_incidents(affected_ci: str) -> str:
 
 
 @tool
-def tool_search_change_requests(begin_date: str, end_date: str, affected_ci: str) -> str:
+def tool_search_change_requests(begin_date: str, end_date: str, application_ci_id: str) -> str:
     """Search for ServiceNow change requests and return their details."""
     client = get_servicenow_client(is_mock=True, mock_data_source='change_request')
 
     gr: GlideRecord = client.GlideRecord('change_request')
     gr.limit = 100
-    gr.add_query("affected_ci", affected_ci)
+    gr.add_query("affected_ci", application_ci_id)
     gr.add_query("start_date", begin_date)
     gr.add_query("end_date", end_date)
     
@@ -82,6 +84,8 @@ def tool_search_change_requests(begin_date: str, end_date: str, affected_ci: str
 
     incidents = []
     for record in gr:
+        if str(getattr(record, "affected_ci")) != application_ci_id:
+            continue
         incident = {}
         for field in fields:
             try:
@@ -100,12 +104,12 @@ def tool_search_change_requests(begin_date: str, end_date: str, affected_ci: str
     return response
 
 @tool
-def tool_search_cmdb_ci(app_name: str=None, class_name: str=None, ci_id: str=None) -> str:
+def tool_search_cmdb_ci(app_name: str=None, class_name: str=None, application_ci_id: str=None) -> str:
     """
     Search ServiceNow CMDB Configuration Item (CI) database for application and service information.
     """
-    if not any([app_name, class_name, ci_id]):
-        raise ValueError("At least one of app_name, class_name, or ci_id must be provided.")
+    if not any([app_name, class_name, application_ci_id]):
+        raise ValueError("At least one of app_name, class_name, or application_ci_id must be provided.")
 
     client = get_servicenow_client(is_mock=True, mock_data_source='cmdb')
 
@@ -116,8 +120,8 @@ def tool_search_cmdb_ci(app_name: str=None, class_name: str=None, ci_id: str=Non
         gr.add_encoded_query(f"parent.nameLIKE{app_name}^ORchild.nameLIKE{app_name}")
     if class_name:
         gr.add_encoded_query(f"parent.sys_class_name={class_name}^ORchild.sys_class_name={class_name}")
-    if ci_id:
-        gr.add_encoded_query(f"parent.u_ci_id={ci_id}^ORchild.u_ci_id={ci_id}")
+    if application_ci_id:
+        gr.add_encoded_query(f"parent.u_ci_id={application_ci_id}^ORchild.u_ci_id={application_ci_id}")
 
     gr.query()
 
@@ -146,8 +150,8 @@ def tool_search_cmdb_ci(app_name: str=None, class_name: str=None, ci_id: str=Non
         cirels = [r for r in cirels if app_name in r['parent.name'] or app_name in r['child.name']]
     if class_name:
         cirels = [r for r in cirels if class_name in r['parent.sys_class_name'] or class_name in r['child.sys_class_name']]
-    if ci_id:
-        cirels = [r for r in cirels if ci_id in r['parent.u_ci_id'] or ci_id in r['child.u_ci_id']]
+    if application_ci_id:
+        cirels = [r for r in cirels if application_ci_id in r['parent.u_ci_id'] or application_ci_id in r['child.u_ci_id']]
 
     logger.info(f"Found {len(cirels)} CIs")
 

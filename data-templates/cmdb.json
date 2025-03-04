@@ -28,10 +28,10 @@
         "child.sys_class_name": "cmdb_ci_appliance_scale",
         "child.sys_id": "72be9874c10e45ddebfbf5e92af8af0e",
         "child.u_ci_id": "mock-app-id-01",
-        "parent.name": "Genomics Analysis Platform (GAP)_Production_1",
+        "parent.name": "MockApplicationServer",
         "parent.sys_class_name": "u_cmdb_ci_application_instance",
         "parent.sys_id": "506f16d6ab884fc5811aebcc8f8b9637",
-        "parent.u_ci_id": "GAP321",
+        "parent.u_ci_id": "mock-app-id",
         "type.child_descriptor": "Hosted on",
         "type.parent_descriptor": "Provides Host"
     },
@@ -64,10 +64,10 @@
         "child.sys_class_name": "cmdb_ci_file_storage",
         "child.sys_id": "6fb3988fa1c0006902d0b9c6a70eb3a6",
         "child.u_ci_id": "mock-app-id-02",
-        "parent.name": "Machine Learning Model Orchestrator - Batch Processing",
+        "parent.name": "MockApplicationServer",
         "parent.sys_class_name": "cmdb_ci_appl",
         "parent.sys_id": "29bd5b537ccd4f47b0f8c2d7875f3f43",
-        "parent.u_ci_id": "MLMO654",
+        "parent.u_ci_id": "mock-app-id",
         "type.child_descriptor": "Mapped from",
         "type.parent_descriptor": "Maps to"
     },
@@ -108,14 +108,14 @@
         "type.parent_descriptor": "Configured by"
     },
     {
-        "child.name": "stellartruck425",
+        "child.name": "MockApplicationServer",
         "child.sys_class_name": "cmdb_ci_middleware",
         "child.sys_id": "df43919e4a5b403e9431a2bd58cca745",
-        "child.u_ci_id": "stellartruck425",
+        "child.u_ci_id": "mock-app-id",
         "parent.name": "Global Supply Chain Management System_Production_2",
         "parent.sys_class_name": "u_cmdb_ci_application_instance",
         "parent.sys_id": "2d56b44e3c7841e9adb0ab7c65b789ed",
-        "parent.u_ci_id": "GSCM543",
+        "parent.u_ci_id": "mock-parent-app-idx",
         "type.child_descriptor": "Adapts",
         "type.parent_descriptor": "Adapted by"
     },

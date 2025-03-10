@@ -12,7 +12,7 @@ import boto3
 
 from agents.tools.common import (
     tool_local_ip,
-    tool_system_time
+    #tool_system_time
 )
 from agents.tools.servicenow_tools import ( 
     tool_search_incidents,
@@ -50,7 +50,7 @@ class MainAgent:
     def __init__(self):
         self.tools = [
             tool_local_ip, 
-            tool_system_time, 
+            #tool_system_time, 
             tool_query_program_logs,
             tool_query_program_metrics,
             tool_search_incidents,

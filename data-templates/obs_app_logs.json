@@ -93,7 +93,7 @@
     {
         "timestamp": "2020-01-01T13:00:00Z",
         "type": "ERROR",
-        "application": "qwer5678",
+        "application": "mock-app-id",
         "ip": "192.168.0.113",
         "message": "Database connection failed"
     },
@@ -128,14 +128,14 @@
     {
         "timestamp": "2020-01-01T18:00:00Z",
         "type": "INFO",
-        "application": "asdf1234",
+        "application": "mock-app-id",
         "ip": "192.168.0.118",
         "message": "Application backup completed"
     },
     {
         "timestamp": "2020-01-01T19:00:00Z",
         "type": "WARN",
-        "application": "qwer5678",
+        "application": "mock-app-id",
         "ip": "192.168.0.119",
         "message": "High error rate"
     },

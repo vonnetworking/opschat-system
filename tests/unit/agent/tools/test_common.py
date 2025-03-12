@@ -4,8 +4,7 @@ from datetime import datetime
 
 from agents.tools.common import (
     tool_local_ip, 
-    tool_system_time,
-    tool_query_program_logs
+    tool_system_time
 )
 
 def test_tool_local_ip():

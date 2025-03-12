@@ -9,7 +9,7 @@ from agents.utils.elasticsearch_conn import get_elasticsearch_client
 
 
 @tool
-def tool_query_program_logs(begin_date: str, end_date: str, application: str=None, ip: str=None, change_id: str=None) -> str:
+def tool_query_program_logs(begin_date: str, end_date: str, application_ci_id: str=None, ip: str=None) -> str:
     """
     This tool will query program log entries based on the provided application details and date periods.
     The following must always be provided to limit the scope of the logs:
@@ -29,17 +29,15 @@ def tool_query_program_logs(begin_date: str, end_date: str, application: str=Non
         "query": {
             "bool": {
                 "must": [
-                    {"range": {"timestamp": {"gte": begin_date, "lte": end_date}}}
+                    #{"range": {"timestamp": {"gte": begin_date, "lte": end_date}}}
                 ]
             }
         }
     }
-    if application:
-        query['query']['bool']['must'].append({"match": {"application": application}})
+    if application_ci_id:
+        query['query']['bool']['must'].append({"match": {"application": application_ci_id}})
     if ip:
         query['query']['bool']['must'].append({"match": {"ip": ip}})
-    if change_id:
-        query['query']['bool']['must'].append({"match": {"change_id": change_id}})
 
     response = client.search(index='obs_app_logs', body=query)
 
@@ -67,7 +65,7 @@ def tool_query_program_metrics(begin_date: str, end_date: str, application_ci_id
         "query": {
             "bool": {
                 "must": [
-                    {"range": {"timestamp": {"gte": begin_date, "lte": end_date}}},
+                    #{"range": {"timestamp": {"gte": begin_date, "lte": end_date}}},
                     {"match": {"application_ci_id": application_ci_id}}
                 ]
             }

@@ -50,6 +50,7 @@ USER appuser
 # Copy application code
 COPY --chown=appuser src ./src
 COPY --chown=appuser chat-ui ./chat-ui
+COPY --chown=appuser data-templates ./data-templates
 
 # Build the frontend
 WORKDIR /app/chat-ui

@@ -10,7 +10,7 @@ from agents.tools.servicenow_tools import (
 
 def test_tool_search_incidents():
     args = {
-        "affected_ci": "mock-affected-ci"
+        "application_ci_id": "mock-app-id"
     }
     tool_call = ToolCall(
         name="tool_search_incidents",
@@ -32,7 +32,7 @@ def test_tool_search_change_request():
     args = {
         "begin_date": "mock-begin-date",
         "end_date": "mock-end-date",
-        "affected_ci": "mock-affected-ci"
+        "application_ci_id": "mock-affected-ci"
     }
     tool_call = ToolCall(
         name="tool_search_change_requests",

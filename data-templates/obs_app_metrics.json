@@ -24,7 +24,7 @@
     {
       "timestamp": "2025-02-25T12:00:10Z",
       "application": "payment-service",
-      "application_ci_id": "DaEwhAtyGP",
+      "application_ci_id": "mock-app-id",
       "log_level": "WARN",
       "message": "Failed to retrieve user data",
       "host": "server-04",
@@ -35,7 +35,7 @@
     {
       "timestamp": "2025-02-25T12:00:15Z",
       "application": "order-service",
-      "application_ci_id": "cvA014IqnP",
+      "application_ci_id": "mock-app-id",
       "log_level": "WARN",
       "message": "Payment transaction processed",
       "host": "server-04",
@@ -46,7 +46,7 @@
     {
       "timestamp": "2025-02-25T12:00:20Z",
       "application": "payment-service",
-      "application_ci_id": "Cx6yI6oTKT",
+      "application_ci_id": "mock-app-id",
       "log_level": "WARN",
       "message": "Unauthorized access attempt detected",
       "host": "server-04",

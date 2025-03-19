@@ -4,7 +4,7 @@ from time import time
 from uuid import uuid4
 from fastapi import FastAPI, HTTPException, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, JSONResponse
 
 from server.schemas import ChatMessage, ChatRequest, ChatCompletionDelta, ChatCompletionChoice, ChatCompletionChunk
 from typing import List, Generator
@@ -142,29 +142,36 @@ def health():
 @app.post("/v1/chat/completions")
 async def chat(chat_req: ChatRequest):
     logger.info('Received chat request: %s', chat_req.model_dump())
-    assert chat_req.stream
 
-    if chat_req.max_tokens == 15:
-        summary = main_agent.generate_conversation_summary(chat_req)
-        gen: Generator = (lambda x: (yield x))(summary)
+    messages: list | None = extract_messages(chat_req)
+
+    if chat_req.stream:
+
+        if chat_req.max_tokens == 15:
+            summary = main_agent.generate_conversation_summary(chat_req)
+            gen: Generator = (lambda x: (yield x))(summary)
+            return StreamingResponse(
+                content=openai_stream_generator(gen),
+                media_type="text/event-stream",
+                headers={"Transfer-Encoding": "chunked"}
+            )
+        
+        response_stream = main_agent.stream(
+            {"messages": messages},
+            stream_mode=["updates"],
+            config={"configurable": {"thread_id": "mock-thread-id"}}
+        )
         return StreamingResponse(
-            content=openai_stream_generator(gen),
+            content=openai_stream_generator(response_stream),
             media_type="text/event-stream",
             headers={"Transfer-Encoding": "chunked"}
         )
-
-    messages: list | None = extract_messages(chat_req)
- 
-    response_stream = main_agent.stream(
-        {"messages": messages},
-        stream_mode=["updates"],
-        config={"configurable": {"thread_id": "dummy"}}
-    )
-    return StreamingResponse(
-        content=openai_stream_generator(response_stream),
-        media_type="text/event-stream",
-        headers={"Transfer-Encoding": "chunked"}
-    )
+    else:
+        response = main_agent.generate_response(
+            messages,
+            config={"configurable": {"thread_id": "mock-thread-id"}}
+        )
+        return JSONResponse(content=response)
 
 
 if __name__ == "__main__":

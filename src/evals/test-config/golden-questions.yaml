@@ -1,0 +1,13 @@
+name: golden-questions
+version: "1"
+save_period: 1
+
+completions:
+  save_period: 1
+
+questions:
+  input_filename: questions/golden-questions.json
+
+evaluations:
+  llm_provider:
+    model: anthropic.claude-3-5-haiku-20241022-v1:0

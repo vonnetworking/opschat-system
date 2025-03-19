@@ -74,11 +74,19 @@ class MainAgent:
             return file.read()
         
 
-    def generate_response(self, message: str):
+    def generate_response(self, message: str, config: dict=None):
+        message_list = []
+        if type(message) is list:
+            message_list = message
+        elif type(message) is dict:
+            message_list = [message]
+        else:
+            message_list = [{"role": "user", "content": message}]
+
         # Use the agent
         final_state = self.app.invoke(
-            {"messages": [{"role": "user", "content": message}]},
-            config={"configurable": {"thread_id": 12}}
+            {"messages": message_list},
+            config=config
         )
         response = final_state["messages"][-1].content
 

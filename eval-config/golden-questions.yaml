@@ -1,0 +1,14 @@
+version: "1"
+
+questions:
+  input_filename: questions/golden-questions.json
+
+completions:
+  save_period: 1
+  llm_provider:
+    api_base: ""
+
+evaluations:
+  save_period: 1
+  llm_provider:
+    model: anthropic.claude-3-5-sonnet-20240620-v1:0

@@ -23,9 +23,12 @@ def mock_config():
             "input_filename": "test_questions.json"
         },
         "completions": {
-            "api_base": "http://localhost:8001"
+            "save_period": 1,
+            "api_base": os.getenv("API_BASE")
         },
-        "save_period": 1
+        "evaluations": {
+            "save_period": 1
+        }
     }
 
 @pytest.fixture
@@ -46,7 +49,7 @@ def mock_responses():
 @patch('evals.evaluate_agent.load_data_file')
 @patch('evals.evaluate_agent.save_data_file')
 def test_run_completions(mock_save_data, mock_load_data, mock_load_config, 
-                         mock_config, mock_questions, mock_responses):
+                         mock_config, mock_questions):
     # Set up mocks
     mock_load_config.return_value = mock_config
     mock_load_data.side_effect = [None, mock_questions]  # First None for existing responses, then questions

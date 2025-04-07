@@ -133,5 +133,10 @@
         "id": "1.2.2",
         "question": "Are there any issues with the databases associated with application mock-app-id that correlate with changes to the system?",
         "truth": ""
+    },
+    {
+        "id": "2.5.2",
+        "question": "Show me information about the latest change that may have affected mock-app-id",
+        "truth": "Change Request Number: bb85123e\nParent: EB1308\nDescription: Firewall Optimization for Network Security mock-app-id enhancement"
     }
 ]

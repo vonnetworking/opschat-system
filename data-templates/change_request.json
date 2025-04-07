@@ -9,11 +9,14 @@
         "short_description": "Deployment of PL1001 Core Management \u2013 SA9929 Setup",
         "start_date": "2025-01-10 10:00:00",
         "u_down_time": "No",
-        "u_environment": "Production",
+        "u_environment": "dev",
         "u_stage": "in progress",
         "u_status_reason": "Pending Approval",
         "work_end": "2025-01-10 10:30:00",
-        "work_start": "2025-01-10 10:05:00"
+        "work_start": "2025-01-10 10:05:00",
+        "number": "279f0f28",
+        "parent": "BB4BC4",
+        "cmdb_ci": "BB7080"
     },
     {
         "description": "Data Migration for SU3090 Configuration Update",
@@ -25,11 +28,14 @@
         "short_description": "Data Migration SU3090 Update",
         "start_date": "2025-01-15 08:00:00",
         "u_down_time": "No",
-        "u_environment": "Staging",
+        "u_environment": "prod",
         "u_stage": "complete",
         "u_status_reason": "Completed",
         "work_end": "2025-01-17 16:45:00",
-        "work_start": "2025-01-15 08:15:00"
+        "work_start": "2025-01-15 08:15:00",
+        "number": "544b3f8c",
+        "parent": "CAEA0B",
+        "cmdb_ci": "639218"
     },
     {
         "description": "System Integration Testing for FS781 \u2013 API-Gateway",
@@ -41,11 +47,14 @@
         "short_description": "SIT for FS781 \u2013 API-Gateway",
         "start_date": "2025-01-20 09:00:00",
         "u_down_time": "Yes",
-        "u_environment": "Testing",
+        "u_environment": "test",
         "u_stage": "in progress",
         "u_status_reason": "Implementation",
         "work_end": "2025-01-20 15:30:00",
-        "work_start": "2025-01-20 09:15:00"
+        "work_start": "2025-01-20 09:15:00",
+        "number": "a29818af",
+        "parent": "FC6731",
+        "cmdb_ci": "3F3D72"
     },
     {
         "description": "VM Configuration for CR5823 Virtual Machine Storage",
@@ -57,27 +66,33 @@
         "short_description": "Configuration CR5823 VM Storage",
         "start_date": "2025-01-22 10:00:00",
         "u_down_time": "No",
-        "u_environment": "Development",
+        "u_environment": "dev",
         "u_stage": "scheduled",
         "u_status_reason": "Scheduled",
         "work_end": "2025-01-22 12:00:00",
-        "work_start": "2025-01-22 10:30:00"
+        "work_start": "2025-01-22 10:30:00",
+        "number": "9d19799a",
+        "parent": "D01822",
+        "cmdb_ci": "6BA102"
     },
     {
-        "description": "Firewall Optimization for Network Security SS4310 enhancement",
+        "description": "Firewall Optimization for Network Security mock-app-id enhancement",
         "end_date": "2025-01-30 12:22:00",
         "requested_by": {
             "link": "https://abc.service-now.com/api/now/table/sys_user/fg3245678bd4321cf5a6e",
             "value": "fg3245678bd4321cf5a6e"
         },
-        "short_description": "Network Security Optimization SS4310",
+        "short_description": "Network Security Optimization mock-app-id",
         "start_date": "2025-01-28 15:00:00",
         "u_down_time": "Yes",
-        "u_environment": "Production",
+        "u_environment": "prod",
         "u_stage": "implementation",
         "u_status_reason": "Reviewed",
         "work_end": "2025-01-29 11:00:00",
-        "work_start": "2025-01-28 16:00:00"
+        "work_start": "2025-01-28 16:00:00",
+        "number": "bb85123e",
+        "parent": "EB1308",
+        "cmdb_ci": "mock-app-id"
     },
     {
         "description": "Service Deployment for Application HX2049 \u2013 Verification10",
@@ -89,11 +104,14 @@
         "short_description": "Deployment Verification for HX2049",
         "start_date": "2025-01-23 13:00:00",
         "u_down_time": "No",
-        "u_environment": "Integration",
+        "u_environment": "dev",
         "u_stage": "preparation",
         "u_status_reason": "Pending Review",
         "work_end": "2025-01-23 17:45:00",
-        "work_start": "2025-01-23 13:10:00"
+        "work_start": "2025-01-23 13:10:00",
+        "number": "f3ebffad",
+        "parent": "4FD5E7",
+        "cmdb_ci": "FD9FF7"
     },
     {
         "description": "Upgrade Pathway for Platform Enhancement in BY7682 \u2013 Data Mode",
@@ -105,11 +123,14 @@
         "short_description": "Enhancement BY7682 Platform Upgrade",
         "start_date": "2025-01-20 08:45:00",
         "u_down_time": "Yes",
-        "u_environment": "Staging",
+        "u_environment": "prod",
         "u_stage": "testing",
         "u_status_reason": "In Process",
         "work_end": "2025-01-20 14:30:00",
-        "work_start": "2025-01-20 09:00:00"
+        "work_start": "2025-01-20 09:00:00",
+        "number": "07120ade",
+        "parent": "1C9D03",
+        "cmdb_ci": "A34CE2"
     },
     {
         "description": "Automated Script Execution for KA1235 Scheduler Task",
@@ -121,11 +142,14 @@
         "short_description": "Script Execution KA1235 Scheduler",
         "start_date": "2025-01-27 11:15:00",
         "u_down_time": "No",
-        "u_environment": "Production",
+        "u_environment": "test",
         "u_stage": "verification",
         "u_status_reason": "Finalized",
         "work_end": "2025-01-27 13:45:00",
-        "work_start": "2025-01-27 11:45:00"
+        "work_start": "2025-01-27 11:45:00",
+        "number": "8d564049",
+        "parent": "2573AB",
+        "cmdb_ci": "E7BBB6"
     },
     {
         "description": "Performance Enhancement for TG4391 System Backend",
@@ -137,11 +161,14 @@
         "short_description": "Backend Enhancement TG4391 System",
         "start_date": "2025-01-11 09:50:00",
         "u_down_time": "Yes",
-        "u_environment": "Development",
+        "u_environment": "dev",
         "u_stage": "in review",
         "u_status_reason": "Approved",
         "work_end": "2025-01-11 14:00:00",
-        "work_start": "2025-01-11 10:30:00"
+        "work_start": "2025-01-11 10:30:00",
+        "number": "499d99d4",
+        "parent": "25574D",
+        "cmdb_ci": "DFC312"
     },
     {
         "description": "Infrastructure Expansion for WZ0043 Enterprise Solutions",
@@ -153,10 +180,13 @@
         "short_description": "Expansion WZ0043 Enterprise",
         "start_date": "2025-01-28 07:50:00",
         "u_down_time": "No",
-        "u_environment": "Production",
+        "u_environment": "test",
         "u_stage": "execution",
         "u_status_reason": "Under Observation",
         "work_end": "2025-01-28 14:00:00",
-        "work_start": "2025-01-28 08:15:00"
+        "work_start": "2025-01-28 08:15:00",
+        "number": "09b5eb48",
+        "parent": "461AC9",
+        "cmdb_ci": "5E65C9"
     }
 ]

@@ -61,7 +61,7 @@ def tool_search_change_requests(begin_date: str, end_date: str, application_ci_i
 
     gr: GlideRecord = client.GlideRecord('change_request')
     gr.limit = 100
-    gr.add_query("affected_ci", application_ci_id)
+    gr.add_query("cmdb_ci", application_ci_id)
     gr.add_query("start_date", begin_date)
     gr.add_query("end_date", end_date)
     
@@ -71,8 +71,12 @@ def tool_search_change_requests(begin_date: str, end_date: str, application_ci_i
         return "No change requests found"
 
     fields = [
+        "number",
+        "parent",
+        "cmdb_ci",
         "description",
         "short_description",
+        "u_environment",
         "start_date",
         "end_date",
         "work_start",
@@ -84,7 +88,7 @@ def tool_search_change_requests(begin_date: str, end_date: str, application_ci_i
 
     incidents = []
     for record in gr:
-        if str(getattr(record, "affected_ci")) != application_ci_id:
+        if str(getattr(record, "cmdb_ci")) != application_ci_id:
             continue
         incident = {}
         for field in fields:

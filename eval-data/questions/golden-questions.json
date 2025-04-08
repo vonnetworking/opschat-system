@@ -10,8 +10,8 @@
         "truth": ""
     },
     {
-        "id": "2.5.2",
-        "question": "Show me information about the latest change that may have affected mock-app-id",
+        "id": "2.5.1",
+        "question": "Show me information about the latest change that may have affected IP address 192.168.1.1",
         "truth": ""
     },
     {
@@ -81,7 +81,7 @@
     },
     {
         "id": "2.2.2",
-        "question": "What is the IP address of the mock-app-id-02 component?",
+        "question": "What is the IP address for the web_back_end component of the mock-app-id-02 application?",
         "truth": ""
     },
     {
@@ -90,7 +90,7 @@
         "truth": ""
     },
     {
-        "id": "1.5.1",
+        "id": "1.5.2",
         "question": "Did change ticket XYZ cause any issues with the application?",
         "truth": ""
     },
@@ -111,9 +111,10 @@
     },
     {
         "id": "1.8.1",
-        "question": "Which applications are experiencing the most errors in the last day?",
+        "question": "Which applications are experiencing the most errors in the last last day?",
         "truth": ""
     },
+
     {
         "id": "1.9.2",
         "question": "What is the maximum CPU usage of any service for application mock-app-id in the last 48 hrs?",
@@ -138,5 +139,70 @@
         "id": "2.5.2",
         "question": "Show me information about the latest change that may have affected mock-app-id",
         "truth": "Change Request Number: bb85123e\nParent: EB1308\nDescription: Firewall Optimization for Network Security mock-app-id enhancement"
+    },
+    {
+        "id": "1.1.1",
+        "question": "What are the up and downstream dependencies for the ip 192.168.1.1?",
+        "truth": ""
+    },
+    {
+        "id": "1.2.1",
+        "question": "Are there any issues with the database associated with application ABC123 that correlate with changes to the system?",
+        "truth": ""
+    },
+    {
+        "id": "1.5.1",
+        "question": "Did change ticket CHG001 cause any issues with the application?",
+        "truth": ""
+    },
+    {
+        "id": "1.8.2",
+        "question": "Which applications are experiencing the most errors in the last day?",
+        "truth": ""
+    },    
+    {
+        "id": "1.9.1",
+        "question": "What is the maximum CPU usage of the gui_backend_service for application ABC123 in the last 48 hours?",
+        "truth": ""
+    },
+    {
+        "id": "2.1.1",
+        "question": "Are there any issues with the databases associated with application ABC123?",
+        "truth": ""
+    },
+    {
+        "id": "2.2.1",
+        "question": "What is the IP address for the web_back_end component of the ABC123 application?",
+        "truth": ""
+    },
+    {
+        "id": "2.3.1",
+        "question": "Provide the latest transaction times for  IP address 192.168.1.1",
+        "truth": ""
+    },
+    {
+        "id": "2.4.1",
+        "question": "Show me the latest metric data for  IP address 192.168.1.1",
+        "truth": ""
+    },
+    {
+        "id": "2.6.1",
+        "question": "Show me the last 10 http requests that hit IP address 192.168.1.1",
+        "truth": ""
+    },
+    {
+        "id": "2.7.1",
+        "question": "What was the average response time for transactions hitting 192.168.1.1?",
+        "truth": ""
+    },
+    {
+        "id": "2.8.1",
+        "question": "What is the status of the db_service component of app ABC123?",
+        "truth": ""
+    },
+    {
+        "id": "2.9.1",
+        "question": "What is the status of the gui_backend_service component of app ABC123?",
+        "truth": ""
     }
 ]

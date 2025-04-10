@@ -7,7 +7,7 @@
     {
         "id": "2.4.2",
         "question": "Show me all the latest metric data for mock-app-id",
-        "truth": ""
+        "truth": "1. Payment Service (2025-02-25T12:00:10Z):\n   - Response Time: 2074 ms\n   - CPU Usage: 11.78%\n   - Memory Usage: 555 MB\n\n2. Order Service (2025-02-25T12:00:15Z):\n   - Response Time: 493 ms\n   - CPU Usage: 17.45%\n   - Memory Usage: 1089 MB\n\n3. Payment Service (2025-02-25T12:00:20Z):\n   - Response Time: 208 ms\n   - CPU Usage: 52.22%\n   - Memory Usage: 581 MB"
     },
     {
         "id": "2.5.1",
@@ -17,7 +17,7 @@
     {
         "id": "2.7.2",
         "question": "What is the average response time for transactions hitting the app mock-app-id?",
-        "truth": ""
+        "truth": "2074 ms + 493 ms + 208 ms = 2775 ms\n2775 ms / 3 transactions = 925 ms\n\nTherefore, the average response time for transactions hitting the app mock-app-id is 925 milliseconds (or 0.925 seconds)."
     },
     {
         "id": "2.10.1",
@@ -107,7 +107,7 @@
     {
         "id": "1.4.2",
         "question": "Did the any services of application mock-app-id have any errors in the last 48 hours?",
-        "truth": ""
+        "truth": "1. An ERROR occurred: \"Database connection failed\" (timestamp: 2020-01-01T13:00:00Z, IP: 192.168.0.113)\n2. A WARNING was issued: \"High error rate\" (timestamp: 2020-01-01T19:00:00Z, IP: 192.168.0.119)"
     },
     {
         "id": "1.8.1",
@@ -118,7 +118,7 @@
     {
         "id": "1.9.2",
         "question": "What is the maximum CPU usage of any service for application mock-app-id in the last 48 hrs?",
-        "truth": ""
+        "truth": "Over the last 48 hours, the maximum CPU usage of any service is 52.22%. This peak CPU usage was recorded for the payment-service at the timestamp 2025-02-25T12:00:20Z."
     },
     {
         "id": "1.6.1",
@@ -158,7 +158,7 @@
     {
         "id": "1.8.2",
         "question": "Which applications are experiencing the most errors in the last day?",
-        "truth": ""
+        "truth": "1. zxcv9876: 2 ERROR logs\n2. asdf1234: 2 ERROR logs\n3. mock-app-id: 1 ERROR log and 1 WARN log\n4. qwer5678: 1 ERROR log\n\nThe zxcv9876 and asdf1234 applications seem to be experiencing the most errors."
     },    
     {
         "id": "1.9.1",

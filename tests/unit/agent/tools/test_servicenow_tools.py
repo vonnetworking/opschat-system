@@ -49,22 +49,9 @@ def test_tool_search_change_request():
     assert content
     assert type(content) is str
 
-@pytest.mark.parametrize(
-    "app_name, class_name, ci_id",
-    [
-        ("mock-app-name", "mock-class-name", "mock-ci-id"),
-        ("mock-app-name", "mock-class-name", None),
-        ("mock-app-name", None, None),
-    ]
-)
-def test_tool_search_cmdb_ci(app_name, class_name, ci_id):
-    args = {}
-    if app_name:
-        args["app_name"] = app_name
-    if class_name:
-        args["class_name"] = class_name
-    if ci_id:
-        args["ci_id"] = ci_id
+
+def test_tool_search_cmdb_ci():
+    args = {"application_ci_id": "mock-app-id"}
         
     tool_call = ToolCall(
         name="tool_search_cmdb_ci",
@@ -80,3 +67,5 @@ def test_tool_search_cmdb_ci(app_name, class_name, ci_id):
 
     assert content
     assert type(content) is str
+    assert "GlideRecord" not in content
+    assert "GlideElement" not in content

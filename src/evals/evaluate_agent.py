@@ -81,7 +81,7 @@ def get_llm(provider_config: dict) -> LLM:
     )
 
 
-def run_completions(test_config):
+def run_completions(test_config, question_id=None):
     qt_data_file=test_config["questions"]["input_filename"]
     response_file = f'responses/{test_config["name"]}.{test_config.get("version")}.responses.json'
 
@@ -103,33 +103,38 @@ def run_completions(test_config):
     # Perform completions on one question at a time
     llm_client = OpsChatLLM(test_config["completions"]["api_base"])
 
-    save_period = test_config["completions"]["save_period"]
-    for i, qt in enumerate(tqdm(qt_data)):
-        if "response" in qt:
-            continue
-    
-        payload =[dict(role="user", content=qt.get('question'))]
-        
-        response = llm_client.chat(messages=payload)
-
+    def perform_completion(record: dict):
         try:
-            message = response
-            #logging.info(">> LLM RSESPONSE", message)
-            qt["response"] = message
-
+            payload = [dict(role="user", content=record.get("question"))]
+            record["response"] = llm_client.chat(messages=payload)
         except Exception as e:
             logging.error(">> ERROR: ", e)
-            logging.error(">> API RESPONSE: ", response)
-            continue
 
-        # Save to file periodically
-        if i % save_period == 0:
-            save_data_file(qt_data, response_file)
-    
-    save_data_file(qt_data, response_file)
+    save_period = test_config["completions"]["save_period"]
+
+    if question_id:
+        logger.info(f">>> Running for question {question_id}")
+        record = next((item for item in qt_data if item.get("id") == question_id))
+        
+        perform_completion(record)
+
+        save_data_file(qt_data, response_file)
+
+    else:
+        for i, qt in enumerate(tqdm(qt_data)):
+            if "response" in qt:
+                continue
+            
+            perform_completion(qt)
+
+            # Save to file periodically
+            if i % save_period == 0:
+                save_data_file(qt_data, response_file)
+        
+        save_data_file(qt_data, response_file)
 
 
-def run_evaluations(test_config: dict):
+def run_evaluations(test_config: dict, question_id=None):
     response_data_file = test_config["completions"]["output_filename"]
     score_file = _score_file_name(test_config)
     test_config["evaluations"]["output_filename"] = score_file
@@ -151,25 +156,41 @@ def run_evaluations(test_config: dict):
         score_threshold=test_config["evaluations"]["passing_threshold"]
     )
 
-    for i, qa in enumerate(tqdm(qa_data)):
-        if "score" in qa and "passing" in qa:
-            continue
-        
+    def evaluate_record(qa_recod):
         result = evaluator.evaluate(
-            query=qa.get("question", ""), 
-            response=qa.get("response", ""),
-            reference=qa.get("truth")
+            query=qa_recod.get("question", ""), 
+            response=qa_recod.get("response", ""),
+            reference=qa_recod.get("truth")
         )
 
-        qa["passing"] = result.passing
-        qa["score"] = result.score
-        qa["feedback"] = result.feedback
+        qa_recod["passing"] = result.passing
+        qa_recod["score"] = result.score
+        qa_recod["feedback"] = result.feedback
 
-        # Save to file periodically
-        if i % test_config["evaluations"]["save_period"] == 0:
-            save_data_file(qa_data, score_file)
-                
-    save_data_file(qa_data, score_file)
+    if question_id:
+        record = next((item for item in qa_data if item.get("id") == question_id))
+        
+        # Update record from response file, because it changed since original import
+        response_data = load_data_file(response_data_file)
+        response_record = next((item for item in response_data if item.get("id")==question_id))
+        record["response"] = response_record["response"]
+        
+        evaluate_record(record)
+        
+        save_data_file(qa_data, score_file)
+
+    else:
+        for i, qa in enumerate(tqdm(qa_data)):
+            if "score" in qa and "passing" in qa:
+                continue
+            
+            evaluate_record(qa)
+
+            # Save to file periodically
+            if i % test_config["evaluations"]["save_period"] == 0:
+                save_data_file(qa_data, score_file)
+                    
+        save_data_file(qa_data, score_file)
 
 
 def generate_scorecard(test_config: dict):
@@ -193,16 +214,16 @@ def generate_scorecard(test_config: dict):
     return scores
 
 
-def run_llm_test(config_file_name):
-    logger.info(f">>> Running LLM test config {config_file_name}")
+def run_llm_test(config_file_name, question_id=None):
+    logger.info(f">>> Running LLM test config {config_file_name} {question_id}")
     test_config = load_config_file(config_file_name)
 
     if "name" not in test_config:
         test_config["name"] = config_file_name.replace(".yaml", "")
 
-    run_completions(test_config)
+    run_completions(test_config, question_id)
 
-    run_evaluations(test_config)
+    run_evaluations(test_config, question_id)
 
     score = generate_scorecard(test_config)
     print(json.dumps(score, indent=4))
@@ -213,4 +234,10 @@ if __name__ == '__main__':
         config_file = "golden-nuggets.yaml"
     else:
         config_file = sys.argv[1]
-    print( run_llm_test(config_file) )
+
+    if len(sys.argv) > 2:
+        question_id = sys.argv[2]
+    else:
+        question_id = None
+
+    print( run_llm_test(config_file, question_id) )

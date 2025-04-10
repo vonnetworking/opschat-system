@@ -1,4 +1,4 @@
-version: "2"
+version: "04.09-2"
 
 questions:
   input_filename: questions/golden-questions.json

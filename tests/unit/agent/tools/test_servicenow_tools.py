@@ -4,7 +4,7 @@ from langchain_core.messages.tool import ToolCall, ToolMessage
 from agents.tools.servicenow_tools import (
     tool_search_incidents,
     tool_search_change_requests,
-    tool_search_cmdb_ci
+    tool_search_cmdb_rel_ci
 )
 
 
@@ -50,16 +50,16 @@ def test_tool_search_change_request():
     assert type(content) is str
 
 
-def test_tool_search_cmdb_ci():
+def test_tool_search_cmdb_rel_ci():
     args = {"application_ci_id": "mock-app-id"}
         
     tool_call = ToolCall(
-        name="tool_search_cmdb_ci",
+        name="tool_search_cmdb_rel_ci",
         args = args,
         id="tool-call-id",
         type="tool_call"
     )
-    result: ToolMessage = tool_search_cmdb_ci.invoke(tool_call)
+    result: ToolMessage = tool_search_cmdb_rel_ci.invoke(tool_call)
 
     assert isinstance(result, ToolMessage), f"Expected a ToolMessage, got {type(result)}"
 

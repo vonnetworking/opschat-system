@@ -17,7 +17,8 @@ from agents.tools.common import (
 from agents.tools.servicenow_tools import ( 
     tool_search_incidents,
     tool_search_change_requests,
-    tool_search_cmdb_ci
+    tool_search_cmdb_rel_ci,
+    tool_search_cmdb_applications
 )
 from agents.tools.elasticsearch_tools import (
     tool_query_program_logs,
@@ -55,7 +56,8 @@ class MainAgent:
             tool_query_program_metrics,
             tool_search_incidents,
             tool_search_change_requests,
-            tool_search_cmdb_ci
+            tool_search_cmdb_rel_ci,
+            tool_search_cmdb_applications
         ]
         self.model = get_llm()
 

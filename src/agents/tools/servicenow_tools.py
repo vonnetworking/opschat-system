@@ -65,13 +65,17 @@ def tool_search_incidents(application_ci_id: str) -> str:
 
 
 @tool
-def tool_search_change_requests(begin_date: str, end_date: str, application_ci_id: str) -> str:
-    """Search for ServiceNow change requests and return their details."""
+def tool_search_change_requests(begin_date: str, end_date: str, change_request_number:str=None, application_ci_id: str=None) -> str:
+    """
+    Search for ServiceNow change requests and return their details.
+    Requires a Change Request Number or an Application CI ID.
+    """
     client = get_servicenow_client(is_mock=True, mock_data_source='change_request')
 
     gr: GlideRecord = client.GlideRecord('change_request')
     gr.limit = 100
     gr.add_query("cmdb_ci", application_ci_id)
+    gr.add_query("number", change_request_number)
     gr.add_query("start_date", begin_date)
     gr.add_query("end_date", end_date)
     
@@ -98,8 +102,11 @@ def tool_search_change_requests(begin_date: str, end_date: str, application_ci_i
 
     incidents = []
     for record in gr:
-        if str(getattr(record, "cmdb_ci")) != application_ci_id:
+        if application_ci_id and safe_get_value(record, "cmdb_ci") != application_ci_id:
             continue
+        if change_request_number and safe_get_value(record, "number") != change_request_number:
+            continue
+
         incident = {}
         for field in fields:
             try:
@@ -117,9 +124,9 @@ def tool_search_change_requests(begin_date: str, end_date: str, application_ci_i
     return response
 
 @tool
-def tool_search_cmdb_ci(application_ci_id: str) -> str:
+def tool_search_cmdb_rel_ci(application_ci_id: str) -> str:
     """
-    Search ServiceNow CMDB Configuration Item (CI) database for application and service information.
+    Search ServiceNow CMDB Configuration Item (CI) Relationship database for information on relationships between applications and services.
     """
     #if not any([app_name, class_name, application_ci_id]):
     #    raise ValueError("At least one of app_name, class_name, or application_ci_id must be provided.")
@@ -170,5 +177,43 @@ def tool_search_cmdb_ci(application_ci_id: str) -> str:
     logger.info(f"Found {len(cirels)} CIs")
 
     response = f"Found {len(cirels)} CIs"+('\n'.join([str(r) for r in cirels]))
+
+    return response
+
+
+@tool
+def tool_search_cmdb_applications(application_ci_id: str) -> str:
+    """
+    Search ServiceNow CMDB Configuration Item (CI) database for information about system configurations.
+    You can use this tool to find application and host information like IP addresses.
+    """
+    client = get_servicenow_client(is_mock=True, mock_data_source='cmdb_appl')
+
+    gr = client.GlideRecord('cmdb_appl')
+    gr.limit = 20
+
+    gr.add_encoded_query(f"u_ci_id={application_ci_id}")
+
+    gr.query()
+
+    if not gr.has_next():
+        return "No CIs found"
+    
+    fields = [
+        "u_ci_id",
+        "sys_class_name",
+        "name",
+        "short_description",
+        "hosting_servers"
+    ]
+
+    appls = [{field: safe_get_value(record, field) for field in fields} for record in gr]
+
+    # Mock data filter
+    appls = [r for r in appls if application_ci_id == r['u_ci_id'] or application_ci_id in [rserv['u_ci_id'] for rserv in r['hosting_servers']]]
+
+    logger.info(f"Found {len(appls)} CIs")
+
+    response = f"Found {len(appls)} CIs"+('\n'.join([str(r) for r in appls]))
 
     return response

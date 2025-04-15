@@ -172,13 +172,13 @@
     },
     {
         "id": "2.2.1",
-        "question": "What is the IP address for the web_back_end component of the ABC123 application?",
-        "truth": ""
+        "question": "What is the IP address for the web_back_end component of the mock-app-id application?",
+        "truth": "192.168.1.1"
     },
     {
         "id": "2.3.1",
         "question": "Provide the latest transaction times for  IP address 192.168.1.1",
-        "truth": ""
+        "truth": "1477 ms"
     },
     {
         "id": "2.4.1",

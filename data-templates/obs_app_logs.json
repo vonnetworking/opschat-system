@@ -65,8 +65,8 @@
     {
         "timestamp": "2020-01-01T09:00:00Z",
         "type": "ERROR",
-        "application": "asdf1234",
-        "ip": "192.168.0.109",
+        "application": "gui_service",
+        "ip": "192.168.1.123",
         "message": "Application failed to start"
     },
     {
@@ -121,8 +121,8 @@
     {
         "timestamp": "2020-01-01T17:00:00Z",
         "type": "ERROR",
-        "application": "zxcv9876",
-        "ip": "192.168.0.117",
+        "application": "gui_service",
+        "ip": "192.168.1.123",
         "message": "Service unavailable"
     },
     {

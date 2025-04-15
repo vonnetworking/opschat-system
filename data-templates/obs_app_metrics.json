@@ -13,7 +13,7 @@
     {
       "timestamp": "2025-02-25T12:00:05Z",
       "application": "order-service",
-      "application_ci_id": "ZOBEgMMq7p",
+      "application_ci_id": "web_back_end",
       "log_level": "ERROR",
       "message": "Failed to retrieve user data",
       "host": "server-04",
@@ -57,7 +57,7 @@
     {
       "timestamp": "2025-02-25T12:00:25Z",
       "application": "user-service",
-      "application_ci_id": "CSuXdo1Y7q",
+      "application_ci_id": "gui_backend_service",
       "log_level": "INFO",
       "message": "Email notification sent",
       "host": "server-03",
@@ -68,7 +68,7 @@
     {
       "timestamp": "2025-02-25T12:00:30Z",
       "application": "user-service",
-      "application_ci_id": "WdasWTX5eI",
+      "application_ci_id": "gui_backend_service",
       "log_level": "INFO",
       "message": "Order placed successfully",
       "host": "server-03",

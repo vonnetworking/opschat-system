@@ -15,6 +15,11 @@
         "truth": ""
     },
     {
+        "id": "2.5.2",
+        "question": "Show me information about the latest change that may have affected mock-app-id",
+        "truth": "Change Request Number: bb85123e\nParent: EB1308\nDescription: Firewall Optimization for Network Security mock-app-id enhancement"
+    },
+    {
         "id": "2.7.2",
         "question": "What is the average response time for transactions hitting the app mock-app-id?",
         "truth": "2074 ms + 493 ms + 208 ms = 2775 ms\n2775 ms / 3 transactions = 925 ms\n\nTherefore, the average response time for transactions hitting the app mock-app-id is 925 milliseconds (or 0.925 seconds)."
@@ -47,7 +52,7 @@
     {
         "id": "2.12.2",
         "question": "What is the latest error in mock-app-id?",
-        "truth": ""
+        "truth": "Database connection failed at 2020-01-01T13:00:00Z from IP 192.168.0.113"
     },
     {
         "id": "2.13.1",
@@ -67,7 +72,7 @@
     {
         "id": "2.1.2",
         "question": "Are there any issues with the databases associated with the application mock-app-id?",
-        "truth": ""
+        "truth": "Issues include database connection failure, high response times (2074 ms), and unauthorized access attempts."
     },
     {
         "id": "2.8.2",
@@ -87,7 +92,7 @@
     {
         "id": "2.6.2",
         "question": "Show me the last 10 http requests that hit the app mock-app-id",
-        "truth": ""
+        "truth": "Last 3 log entries for mock-app-id:\n1. 2020-01-01T13:00:00Z - ERROR: Database connection failed (IP: 192.168.0.113)\n2. 2020-01-01T18:00:00Z - INFO: Application backup completed (IP: 192.168.0.118)\n3. 2020-01-01T19:00:00Z - WARN: High error rate (IP: 192.168.0.119)"
     },
     {
         "id": "1.5.2",
@@ -97,7 +102,7 @@
     {
         "id": "1.1.2",
         "question": "What are the up and downstream dependencies of mock-app-id?",
-        "truth": ""
+        "truth": "Upstream: Global Supply Chain Management System_Production_2 (CI ID: mock-parent-app-idx); Downstream: arcadialynx4721 (CI ID: mock-app-id-01), infinitesky245 (CI ID: mock-app-id-02)"
     },
     {
         "id": "1.4.1",
@@ -112,9 +117,8 @@
     {
         "id": "1.8.1",
         "question": "Which applications are experiencing the most errors in the last last day?",
-        "truth": ""
+        "truth": "zxcv9876: 2 ERROR logs, asdf1234: 2 ERROR logs, mock-app-id: 1 ERROR log and 1 WARN log, qwer5678: 1 ERROR log"
     },
-
     {
         "id": "1.9.2",
         "question": "What is the maximum CPU usage of any service for application mock-app-id in the last 48 hrs?",
@@ -133,12 +137,7 @@
     {
         "id": "1.2.2",
         "question": "Are there any issues with the databases associated with application mock-app-id that correlate with changes to the system?",
-        "truth": ""
-    },
-    {
-        "id": "2.5.2",
-        "question": "Show me information about the latest change that may have affected mock-app-id",
-        "truth": "Change Request Number: bb85123e\nParent: EB1308\nDescription: Firewall Optimization for Network Security mock-app-id enhancement"
+        "truth": "Database connection failure and high error rate correlated with firewall optimization change (Change Request: bb85123e, Jan 28-30, 2025)"
     },
     {
         "id": "1.1.1",
@@ -159,7 +158,7 @@
         "id": "1.8.2",
         "question": "Which applications are experiencing the most errors in the last day?",
         "truth": "1. zxcv9876: 2 ERROR logs\n2. asdf1234: 2 ERROR logs\n3. mock-app-id: 1 ERROR log and 1 WARN log\n4. qwer5678: 1 ERROR log\n\nThe zxcv9876 and asdf1234 applications seem to be experiencing the most errors."
-    },    
+    },
     {
         "id": "1.9.1",
         "question": "What is the maximum CPU usage of the gui_backend_service for application ABC123 in the last 48 hours?",
@@ -177,12 +176,12 @@
     },
     {
         "id": "2.3.1",
-        "question": "Provide the latest transaction times for  IP address 192.168.1.1",
+        "question": "Provide the latest transaction times for IP address 192.168.1.1",
         "truth": "1477 ms"
     },
     {
         "id": "2.4.1",
-        "question": "Show me the latest metric data for  IP address 192.168.1.1",
+        "question": "Show me the latest metric data for IP address 192.168.1.1",
         "truth": ""
     },
     {
